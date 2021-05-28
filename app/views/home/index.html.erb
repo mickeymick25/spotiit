@@ -1,4 +1,5 @@
-<div class="max-w-lg mx-auto mt-16 text-center">
-  <h1 class="mb-4 text-3xl font-black">Welcome to Spotiit!</h1>
-  <p class="text-lg leading-snug">Use this starting point as a way to quickly set up a new project by generating files, installing gems, and more.</p>
-</div>
+<% if user_signed_in? %>
+	<%= render 'landing' %>
+	<% else %>
+	<%= render 'home' %>
+<% end %>
