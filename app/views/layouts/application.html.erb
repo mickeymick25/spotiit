@@ -3,9 +3,8 @@
   <%= render "shared/head" %>
 
   <body>
+    
     <%= render "shared/flash_notice" %>
-    <%= render "shared/header" %>
-
     <%= content_for?(:content) ? yield(:content) : yield %>
 
   </body>
