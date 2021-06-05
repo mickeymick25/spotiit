@@ -28,3 +28,9 @@
 # For further information see the following documentation:
 # https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy-Report-Only
 # Rails.application.config.content_security_policy_report_only = true
+
+# for google analytics
+# Source https://levelup.gitconnected.com/ruby-on-rails-6-with-google-analytics-turbolinks-and-a-content-security-policy-c4e078df8530
+Rails.application.config.content_security_policy do |policy|
+  policy.script_src :self, 'https://www.googletagmanager.com', 'https://www.google-analytics.com'
+end

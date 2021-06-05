@@ -1,19 +1,27 @@
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-MNH7GGVFB6"></script>
+  <%= javascript_pack_tag 'analytics', async: true %>
+  <!-- End - Google Analytics -->
+
  <title>
    <% if content_for?(:title) %>
      <%= yield :title %> |
    <% end %>
-   Spotiit
+   Spotiit | Connecte ton réseau à nos vendeurs et empoche les primes de nos annonces récompensées !
  </title>
 
  <%= csrf_meta_tags %>
  <%= csp_meta_tag %>
 
+ <meta name="company" content="Spotiit">
+ <meta name="keywords" content="partage entre amis, petites annonces à récompense, annonces immobilières récompensées">
+ <meta name="description" content="Rejoins la communauté des annonces récompensées. Partage les annonces qui concernent ton réseaux, met les en relation et touche la récompense.">
  <meta name="viewport" content="width=device-width, initial-scale=1">
 
  <%#= stylesheet_link_tag  'application', media: 'all', 'data-turbolinks-track': 'reload' %>
  <%= stylesheet_pack_tag  'application',  media: 'all', 'data-turbolinks-track': 'reload' %>
  <%= javascript_pack_tag  'application', 'data-turbolinks-track': 'reload' %>
-
  <%#= javascript_include_tag 'https://js.stripe.com/v3/', 'data-turbolinks-track': 'reload' %>
+
 </head>
