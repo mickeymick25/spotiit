@@ -34,3 +34,12 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+#Config mickael vsc
+.gitignore
+Gemfile.lock
+yarn.lock
+npm-debug.log
+package-lock.json
+/.vscode/*
+/config/application.rb
