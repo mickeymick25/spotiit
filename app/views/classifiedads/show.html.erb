@@ -1,0 +1,15 @@
+<%= render "shared/nav" %>
+<h1>Annonce <%= @classifiedad.id%></h1>
+
+<h2><%=@classifiedad.title %></h2>
+<p> <%=@classifiedad.sector %></p>
+<p> <%=@classifiedad.adstatus %></p>
+<p> <%=@classifiedad.publicationdate %></p>
+<p> <%=@classifiedad.rewardPro %></p>
+<p> <%=@classifiedad.rewardInd %></p>
+
+
+<p>
+    <a href="<%= classifiedad_path(@classifiedad.id) %>" data-confirm="Really?" data-method="delete" %>Supprimer</a>
+    <a href="<%= classifiedads_path %>">Retour</a>
+</p>

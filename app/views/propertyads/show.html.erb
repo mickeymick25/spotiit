@@ -1,0 +1,12 @@
+<%= render "shared/nav" %>
+
+<h1> Annonce Immobilière : <%= @propertyad.id %></h1>
+
+<%= render partial:'showform', locals: {propertyad:@propertyad} %>
+<p>
+    <a href="<%= edit_propertyad_path(@propertyad.id) %>" class="btn btn-default">Editer l'annonce</a>
+    <a href="<%= propertyad_path(@propertyad.id) %>" data-confirm="Really?" data-method="delete" class="btn btn-default" >Supprimer</a>
+</p>
+<p>
+    <a href="<%= propertyads_path %>"class="btn btn-default" >Annuler</a>
+</p>    

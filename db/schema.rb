@@ -10,10 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_27_194241) do
+ActiveRecord::Schema.define(version: 2021_07_05_225036) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "annonceurs", force: :cascade do |t|
+    t.integer "sucessed_Ad"
+    t.integer "failed_Ad"
+    t.integer "reward_engaged"
+    t.integer "reward_paid"
+    t.integer "reward_topay"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+# Could not dump table "classifiedads" because of following StandardError
+#   Unknown type 'ads_status' for column 'adsstatus'
+
+  create_table "localisations", force: :cascade do |t|
+    t.integer "number"
+    t.text "street_type"
+    t.text "street"
+    t.text "district"
+    t.text "city"
+    t.integer "dept"
+    t.text "region"
+    t.decimal "logitude"
+    t.decimal "latitude"
+    t.integer "radius"
+    t.integer "time"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+# Could not dump table "propertyads" because of following StandardError
+#   Unknown type 'orientation' for column 'orientation'
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -30,4 +62,6 @@ ActiveRecord::Schema.define(version: 2021_05_27_194241) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "classifiedads", "localisations"
+  add_foreign_key "propertyads", "classifiedads"
 end

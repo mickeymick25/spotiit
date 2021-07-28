@@ -1,0 +1,19 @@
+<%= render "shared/nav" %>
+
+<h1>Petites annonces Spotiit</h1>
+
+<% if @propertyads.present? %>
+    <% @propertyads.each do |propertyad| %>
+        
+        <%= render partial:'showform', locals: {propertyad:propertyad} %>
+        
+        <p> 
+            <a href="<%= propertyadmgt_path(propertyad.id) %>" class="btn btn-default" >Voir l'annonce</a>
+            <a href="<%= edit_propertyadmgt_path(propertyad.id) %>" class="btn btn-default">Editer l'annonce</a>
+        </p>
+    <% end%>    
+<% end %>
+
+<p>
+    <a href="<%= new_propertyadmgt_path %>">Nouvelle annonce Immobilière</a>
+</p>

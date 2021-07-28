@@ -1,0 +1,121 @@
+
+
+<div style="border:1px solid">
+    <div>
+        <p> 
+            Titre: 
+            <%= propertyad.classifiedad.title %>
+        </p>
+        <p>
+            Secteur: 
+            <%= propertyad.classifiedad.sector %>
+        </p>
+        <p>
+            Statut: 
+            <%= propertyad.classifiedad.adstatus %>
+        </p>
+        <p>
+            Récompense pour les Helpers Pro: 
+            <%= propertyad.classifiedad.rewardPro %>
+        </p>
+        <p> 
+            Récompense pour les Helpers Pro en %: 
+            <%= propertyad.classifiedad.rewardProPercent %>
+        </p>
+        <p> 
+            Récompense pour les Helpers Particulilers: 
+            <%= propertyad.classifiedad.rewardInd %>
+        </p>
+        <p> 
+            Récompense pour les  Helpers Particulier en % 
+            <%= propertyad.classifiedad.rewardIndPercent %>
+        </p>
+    </div>
+    <% if !propertyad.classifiedad.localisation.nil? %>
+        <div>
+            <p>Localisation du Bien</p>
+            <p>
+                Quartier: 
+                <%= propertyad.classifiedad.localisation.district %>
+            </p>
+            <p>
+                Adresse: 
+                <%= propertyad.classifiedad.localisation.street %>
+            </p>
+            <p>
+                Département: 
+                <%= propertyad.classifiedad.localisation.dept %>
+            </p>
+            <p>
+                Ville: 
+                <%= propertyad.classifiedad.localisation.city %>
+            </p>
+            <p>
+                Région: 
+                <%= propertyad.classifiedad.localisation.region %>
+            </p>
+        </div>
+        
+    <% end %>
+    <div>
+        <p>Détails du bien</p>        
+        <p>
+            <label>Type de bien: </label> 
+            <%= propertyad.propertytype %>
+        </p>
+        <p>
+            <label>Nature du bien: </label> 
+            <%= propertyad.propertystate %>
+        </p>
+        <p>
+            <label>Prix de vente Net vendeur: </label> 
+            <%= propertyad.netprice %>
+        </p>
+        <p>
+            <label>Date de disponibilité: </label> 
+            <%= propertyad.availability %>
+        </p>
+        <p>
+            <label>Surface habitable: </label> 
+            <%= propertyad.livingarea %>
+        </p>
+        <p>
+            <label>Surface du terrain: </label> 
+            <%= propertyad.landarea %>
+        </p>
+    </div>
+    <div>
+        <p>A l'intérieure</p>
+        <p>
+            <label>Nombre de pièces: </label> 
+            <%= propertyad.rooms %>
+        </p>
+        <p>
+            <label>Nombre de chambres: </label> 
+            <%= propertyad.bedrooms %>
+        </p>
+    </div>
+    <div>
+        <p>Informations générales</p>
+        <p>
+            <label>Description: </label> 
+            <%= propertyad.description %>
+        </p>
+        <p>
+            <label>Petite description: </label> 
+            <%= propertyad.classifiedad.short_description %>
+        </p>
+        <p>
+            <label>Année de Construction: </label> 
+            <%= propertyad.buildingyear %>
+        </p>
+        <p>
+            <label>Diagnostique de performance énergétique: </label> 
+            <%= propertyad.energydiagnostic %>
+        </p>
+        <p>
+            <label>Diagnostique d'émission de gaz à effet de serre: </label> 
+            <%= propertyad.carbon %>
+        </p>
+    </div>
+</div>

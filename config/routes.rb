@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+
+  resources :classifiedads
+  resources :propertyads
+  resources :propertyadmgts
+  
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   #resources :howitworks
   get "/howitworks", to: "howitworks#index"

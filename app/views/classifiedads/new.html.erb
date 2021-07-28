@@ -1,0 +1,18 @@
+<%= render "shared/nav" %>
+<h1> Creer une annonce</h1>
+
+<%= form_for @classifiedad do |f| %>
+    <div>
+        <label>Titre</label>
+        <%= f.text_field (:title), class:"input" %>
+    </div>
+
+    <div>
+        <button type="submit"> Créer </button>
+    
+    </div>
+<% end %>
+
+<p> 
+    <a href="<%= classifiedads_path %>">Annuler</a>
+</p>
