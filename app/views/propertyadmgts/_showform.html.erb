@@ -118,4 +118,14 @@
             <%= propertyad.carbon %>
         </p>
     </div>
+    <div>
+        <% if propertyad.classifiedad.adfeatures.present? %>
+            <% propertyad.classifiedad.adfeatures.each do |adfeature| %>
+                <p>
+                    <label><%= adfeature.type.typeName %></label>
+                    <%= adfeature.comment %>
+                </p>
+            <% end%>    
+        <% end %>
+    </div>
 </div>

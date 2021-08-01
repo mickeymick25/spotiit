@@ -10,6 +10,7 @@
         <p> 
             <a href="<%= propertyadmgt_path(propertyad.id) %>" class="btn btn-default" >Voir l'annonce</a>
             <a href="<%= edit_propertyadmgt_path(propertyad.id) %>" class="btn btn-default">Editer l'annonce</a>
+            <a href="<%= propertyadmgt_path(propertyad.id) %>"  data-confirm="Really?" data-method="delete" class="btn btn-default" %>Supprimer</a>
         </p>
     <% end%>    
 <% end %>

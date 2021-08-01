@@ -1,4 +1,4 @@
 class Localisation < ApplicationRecord
       
-    has_one :classifiedad
+    has_one :classifiedad, dependent: :destroy
 end

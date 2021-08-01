@@ -57,7 +57,7 @@
         </div>
         <div>
             <label>Nature du bien</label>
-            <%= f.select(:propertystate, Propertyad.propertystates {|propertystate| [propertystate.value,properpropertystatetytype.key]}) %>
+            <%= f.select(:propertystate, Propertyad.propertystates {|propertystate| [propertystate.value,propertystate.key]}) %>
         </div>
         <div>
             <label>Prix de vente (Net vendeur)</label>
@@ -103,7 +103,65 @@
             <label>Description du bien (Courte)</label>
             <%= f.text_field (:short_description), class:"input" %>
         </div>
-    </div>   
+    </div>
+    <div>
+        <label>Commaudités</label>
+        <div>
+            <label>Ascenseur</label>
+            <%= f.check_box  :has_lift %>
+            <%= f.text_field (:lift_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Gardien</label>
+            <%= f.check_box :has_caretaker %>
+            <%= f.text_field (:caretaker_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Balcon</label>
+            <%= f.check_box :has_balcony %>
+            <%= f.text_field (:balcony_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Terrasse</label>
+            <%= f.check_box :has_terrace %>
+            <%= f.text_field (:terrace_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Jardin</label>
+            <%= f.check_box :has_garden %>
+            <%= f.text_field (:garden_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Piscine</label>
+            <%= f.check_box :has_pool %>
+            <%= f.text_field (:pool_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Cheminée</label>
+            <%= f.check_box :has_fireplace%>
+            <%= f.text_field (:fireplace_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Parquet</label>
+            <%= f.check_box :has_woodenfloor %>
+            <%= f.text_field (:woodenfloor_desc), class:"input" %>
+        </div>
+        <div>
+            <label>WC séparés</label>
+            <%= f.check_box :has_separatewc %>
+            <%= f.text_field (:separatewc_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Rangement</label>
+            <%= f.check_box :has_storage %>
+            <%= f.text_field (:storage_desc), class:"input" %>
+        </div>
+        <div>
+            <label>Fibre</label>
+            <%= f.check_box :has_pool %>
+            <%= f.text_field (:pool_desc), class:"input" %>
+        </div>
+    </div>
     <div>
         <button type="submit" class="btn btn-default"> Valider </button>
     </div>

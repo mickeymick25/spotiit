@@ -96,6 +96,39 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Name: adfeatures; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.adfeatures (
+    id bigint NOT NULL,
+    comment character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    classifiedad_id bigint NOT NULL,
+    type_id bigint NOT NULL
+);
+
+
+--
+-- Name: adfeatures_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.adfeatures_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: adfeatures_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.adfeatures_id_seq OWNED BY public.adfeatures.id;
+
+
+--
 -- Name: annonceurs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -128,6 +161,40 @@ CREATE SEQUENCE public.annonceurs_id_seq
 --
 
 ALTER SEQUENCE public.annonceurs_id_seq OWNED BY public.annonceurs.id;
+
+
+--
+-- Name: announcerwishes; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.announcerwishes (
+    id bigint NOT NULL,
+    wishlevel integer,
+    comment character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    type_id bigint NOT NULL,
+    classifiedad_id bigint NOT NULL
+);
+
+
+--
+-- Name: announcerwishes_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.announcerwishes_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: announcerwishes_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.announcerwishes_id_seq OWNED BY public.announcerwishes.id;
 
 
 --
@@ -281,6 +348,40 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: types; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.types (
+    id bigint NOT NULL,
+    secteur character varying,
+    catetory character varying,
+    "typeName" character varying,
+    typekey character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.types_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.types_id_seq OWNED BY public.types.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -319,10 +420,24 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: adfeatures id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adfeatures ALTER COLUMN id SET DEFAULT nextval('public.adfeatures_id_seq'::regclass);
+
+
+--
 -- Name: annonceurs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.annonceurs ALTER COLUMN id SET DEFAULT nextval('public.annonceurs_id_seq'::regclass);
+
+
+--
+-- Name: announcerwishes id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.announcerwishes ALTER COLUMN id SET DEFAULT nextval('public.announcerwishes_id_seq'::regclass);
 
 
 --
@@ -347,10 +462,25 @@ ALTER TABLE ONLY public.propertyads ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: types id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.types ALTER COLUMN id SET DEFAULT nextval('public.types_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: adfeatures adfeatures_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adfeatures
+    ADD CONSTRAINT adfeatures_pkey PRIMARY KEY (id);
 
 
 --
@@ -359,6 +489,14 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 
 ALTER TABLE ONLY public.annonceurs
     ADD CONSTRAINT annonceurs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: announcerwishes announcerwishes_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.announcerwishes
+    ADD CONSTRAINT announcerwishes_pkey PRIMARY KEY (id);
 
 
 --
@@ -402,11 +540,47 @@ ALTER TABLE ONLY public.schema_migrations
 
 
 --
+-- Name: types types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.types
+    ADD CONSTRAINT types_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_adfeatures_on_classifiedad_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adfeatures_on_classifiedad_id ON public.adfeatures USING btree (classifiedad_id);
+
+
+--
+-- Name: index_adfeatures_on_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_adfeatures_on_type_id ON public.adfeatures USING btree (type_id);
+
+
+--
+-- Name: index_announcerwishes_on_classifiedad_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_announcerwishes_on_classifiedad_id ON public.announcerwishes USING btree (classifiedad_id);
+
+
+--
+-- Name: index_announcerwishes_on_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_announcerwishes_on_type_id ON public.announcerwishes USING btree (type_id);
 
 
 --
@@ -438,6 +612,22 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
+-- Name: announcerwishes fk_rails_67f26cca8c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.announcerwishes
+    ADD CONSTRAINT fk_rails_67f26cca8c FOREIGN KEY (classifiedad_id) REFERENCES public.classifiedads(id);
+
+
+--
+-- Name: adfeatures fk_rails_6decdc4b7f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adfeatures
+    ADD CONSTRAINT fk_rails_6decdc4b7f FOREIGN KEY (type_id) REFERENCES public.types(id);
+
+
+--
 -- Name: propertyads fk_rails_7eb8f15391; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -446,11 +636,27 @@ ALTER TABLE ONLY public.propertyads
 
 
 --
+-- Name: announcerwishes fk_rails_8698124143; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.announcerwishes
+    ADD CONSTRAINT fk_rails_8698124143 FOREIGN KEY (type_id) REFERENCES public.types(id);
+
+
+--
 -- Name: classifiedads fk_rails_aa1d51d410; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.classifiedads
     ADD CONSTRAINT fk_rails_aa1d51d410 FOREIGN KEY (localisation_id) REFERENCES public.localisations(id);
+
+
+--
+-- Name: adfeatures fk_rails_c4cbbd6950; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.adfeatures
+    ADD CONSTRAINT fk_rails_c4cbbd6950 FOREIGN KEY (classifiedad_id) REFERENCES public.classifiedads(id);
 
 
 --
@@ -471,6 +677,13 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210705222936'),
 ('20210705224152'),
 ('20210705225036'),
-('20210706223133');
+('20210706223133'),
+('20210729145616'),
+('20210729153723'),
+('20210729154705'),
+('20210729154737'),
+('20210729155105'),
+('20210729155135'),
+('20210729155228');
 
 
