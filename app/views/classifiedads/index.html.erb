@@ -1,0 +1,19 @@
+<%= render "shared/nav" %>
+
+<h1>Petites annonces Spotiit</h1>
+
+<% if @classifiedads.present? %>
+    <% @classifiedads.each do |classifiedad| %>
+        <p> <%= classifiedad.title %></p>
+        <p> <%= classifiedad.sector %></p>
+        <p> <%= classifiedad.adstatus %></p>
+        <p> 
+            <a href="<%= classifiedad_path(classifiedad.id) %>">Voir l'annonce</a>
+            <a href="<%= edit_classifiedad_path(classifiedad.id) %>">Editer l'annonce</a>
+        </p>
+    <%end%>
+<% end %>
+
+<p>
+        <a href="<%= new_classifiedad_path %>">Nouvelle annonce</a>
+</p>

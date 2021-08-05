@@ -1,0 +1,2 @@
+module ClassifiedadsHelper
+end

@@ -1,0 +1,8 @@
+<%= render "shared/nav" %>
+<h1> Modification de l'annonce Immobilière: <%= @propertyad.id %></h1>
+
+<%= render partial:'inputform' , locals: {propertyad:@propertyad} %>
+
+<p>
+    <a href="<%= propertyads_path %>">Annuler</a>
+</p>

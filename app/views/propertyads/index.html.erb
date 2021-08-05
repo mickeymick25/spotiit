@@ -1,0 +1,73 @@
+<%= render "shared/nav" %>
+
+<h1>Petites annonces Spotiit</h1>
+
+<% if @propertyads.present? %>
+    <% @propertyads.each do |propertyad| %>
+        <div>
+        <p>Détails du bien</p>        
+        <p>
+            <label>Type de bien: </label> 
+            <%= :propertytype %>
+        </p>
+        <p>
+            <label>Nature du bien: </label> 
+            <%= :propertystate %>
+        </p>
+        <p>
+            <label>Prix de vente Net vendeur: </label> 
+            <%= :netprice %>
+        </p>
+        <p>
+            <label>Date de disponibilité: </label> 
+            <%= :availability %>
+        </p>
+        <p>
+            <label>Surface habitable: </label> 
+            <%= :livingarea %>
+        </p>
+        <p>
+            <label>Surface du terrain: </label> 
+            <%= :landarea %>
+        </p>
+    </div>
+    <div>
+        <p>A l'intérieure</p>
+        <p>
+            <label>Nombre de pièces: </label> 
+            <%= :rooms %>
+        </p>
+        <p>
+            <label>Nombre de chambres: </label> 
+            <%= :bedrooms %>
+        </p>
+    </div>
+    <div>
+        <p>Informations générales</p>
+        <p>
+            <label>Description: </label> 
+            <%= :description %>
+        </p>
+        <p>
+            <label>Année de Construction: </label> 
+            <%= :buildingyear %>
+        </p>
+        <p>
+            <label>Diagnostique de performance énergétique: </label> 
+            <%= :energydiagnostic %>
+        </p>
+        <p>
+            <label>Diagnostique d'émission de gaz à effet de serre: </label> 
+            <%= :carbon %>
+        </p>
+    </div>
+        <p> 
+            <a href="<%= propertyad_path(propertyad.id) %>">Voir l'annonce</a>
+            <a href="<%= edit_propertyad_path(propertyad.id) %>">Editer l'annonce</a>
+        </p>
+    <%end%>
+<% end %>
+
+<p>
+    <a href="<%= new_propertyad_path %>">Nouvelle annonce Immobilière</a>
+</p>

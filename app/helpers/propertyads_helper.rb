@@ -1,0 +1,2 @@
+module PropertyadsHelper
+end

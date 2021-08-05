@@ -1,0 +1,15 @@
+<h1> Edition de l'annonce <%= @classifiedad.id %></h1>
+
+<%= form_for @classifiedad do |f| %>
+<div>
+    <label>Titre</label>
+    <%= f.text_field (:title) %>
+</div>
+<div>
+    <button type="submit"> Modifier </button>
+</div>
+<% end %>
+
+<p> 
+    <a href="<%= classifiedads_path %>">Retour</a>
+</p>
