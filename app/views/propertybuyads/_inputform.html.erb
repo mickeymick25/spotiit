@@ -1,0 +1,90 @@
+<%= javascript_tag 'propertybuyads' %>
+
+<%= form_for @propertybuyad do |f| %>
+    <!-- #some fields for the @person object like:-->
+    <%= render partial:'shared/inputclassified' , locals: {propertybuyad: @propertybuyad, f: f} %>
+    
+    <div>
+        <div>
+            <label>Budget</label>
+            <%= f.text_field (:budget), class:"input" %>
+        </div>
+        <div>
+            <label>Apport</label>
+            <%= f.text_field (:supply), class:"input" %>
+        </div>        
+        <div>
+            <label>Description</label>
+            <%= f.text_field (:description), class:"input" %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Quel type de bien cherchez vous?
+        </div>
+        <div>
+            <%= f.fields_for :propertytypewishes do |typebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertytypes' , f: typebuilder}  %>
+            <% end %> 
+            <%= link_to_add_fields2  "Nouveau souhait", f, :propertytypewishes, locals: { category: 'propertytypes'}  %>
+        </div>
+    <div>
+    <div>
+        <div>
+            Cherchez un bien récent ?
+        </div>
+        <div>
+            <%= f.fields_for :propertystatewishes do |statebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertystates' , f: statebuilder}  %>
+            <% end %> 
+            <%= link_to_add_fields2  "Nouveau souhait", f, :propertystatewishes, locals: { category: 'propertystates'}  %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Mais plus en détails ?
+        </div>
+        <div>
+            <%= f.fields_for :propertydetailwishes do |detailsbuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertydetails' , f: detailsbuilder}  %>
+            <% end %> 
+            <%= link_to_add_fields2  "Nouveau souhait", f, :propertydetailwishes, locals: { category: 'propertydetails'}  %>
+        </div>
+    </div>
+    <div>
+        <div>
+            passons à l'intérieur?
+        </div>
+        <div>
+            <%= f.fields_for :insidefeaturewishes do |insidebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'insidefeatures' , f: insidebuilder}  %>
+            <% end %> 
+            <%= link_to_add_fields2  "Nouveau souhait", f, :insidefeaturewishes, locals: { category: 'insidefeatures'}  %>
+        </div>
+    </div>
+        <div>
+            et à l'exterieur? 
+        </div>
+        <div>
+            <%= f.fields_for :outsidefeaturewishes do |outsidebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'outsidefeatures' , f: outsidebuilder}  %>
+            <% end %> 
+            <%= link_to_add_fields2  "Nouveau souhait", f, :outsidefeaturewishes, locals: { category: 'outsidefeatures'}  %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Avez vous des préférences pour les parties communes?
+        </div>
+        <div>
+            <%= f.fields_for :sharedfeaturewishes do |sharedbuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'sharedfeatures' , f: sharedbuilder }  %>
+            <% end %> 
+            <%= link_to_add_fields2  "Nouveau souhait", f, :sharedfeaturewishes, locals: { category: 'sharedfeatures'}  %>
+        </div>
+    </div>
+    
+    <div>
+        <button type="submit" class="btn btn-default"> Valider </button>
+    </div>
+<% end %>

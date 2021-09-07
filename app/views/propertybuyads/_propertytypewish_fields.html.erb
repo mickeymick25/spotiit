@@ -1,0 +1,18 @@
+
+    <div style="width:100%">
+        <%= f.hidden_field :id %>
+        <%= f.hidden_field :type_id %>
+        <div style="width: 200px; display: inline-block;">
+            <%= f.select :type_id, options_from_collection_for_select(Type.all.select{ |m| m.catetory ==  "propertytypes"}, :id, :typeName, f.object.type_id )  %>
+        </div>
+        <div  style="width: 200px; display: inline-block;">
+            <label>Importance</label>
+            <%= f.select :wishlevel, [["Non défini",0],["Obligatoire",4],["Souhaité",3],["Un plus",2],["Rédhibitoire",1]] %>
+        </div>
+        <div  style="width: 400px; display: inline-block;">
+            <label>Commentaire</label>
+            <%= f.text_field (:comment), class:"input" %>
+        </div>
+        <%= f.check_box :_destroy %>
+        <%= f.label :_destroy, "Supprimer" %>
+    </div>
