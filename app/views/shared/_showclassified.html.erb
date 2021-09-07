@@ -1,0 +1,56 @@
+
+    <div>
+        <p> 
+            Titre: 
+            <%= ad.classifiedad.title %>
+        </p>
+        <p>
+            Secteur: 
+            <%= ad.classifiedad.sector %>
+        </p>
+        <p>
+            Statut: 
+            <%= ad.classifiedad.adstatus %>
+        </p>
+        <p>
+            Récompense pour les Helpers Pro: 
+            <%= ad.classifiedad.rewardPro %>
+        </p>
+        <p> 
+            Récompense pour les Helpers Pro en %: 
+            <%= ad.classifiedad.rewardProPercent %>
+        </p>
+        <p> 
+            Récompense pour les Helpers Particulilers: 
+            <%= ad.classifiedad.rewardInd %>
+        </p>
+        <p> 
+            Récompense pour les  Helpers Particulier en % 
+            <%= ad.classifiedad.rewardIndPercent %>
+        </p>
+    </div>
+    <% if !ad.classifiedad.localisation.nil? %>
+        <div>
+            <p>Localisation du Bien</p>
+            <p>
+                Quartier: 
+                <%= ad.classifiedad.localisation.district %>
+            </p>
+            <p>
+                Adresse: 
+                <%= ad.classifiedad.localisation.street %>
+            </p>
+            <p>
+                Département: 
+                <%= ad.classifiedad.localisation.dept %>
+            </p>
+            <p>
+                Ville: 
+                <%= ad.classifiedad.localisation.city %>
+            </p>
+            <p>
+                Région: 
+                <%= ad.classifiedad.localisation.region %>
+            </p>
+        </div> 
+    <% end %>

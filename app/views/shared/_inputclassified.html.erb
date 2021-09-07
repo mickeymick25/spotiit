@@ -1,0 +1,57 @@
+ <%= f.fields_for :classifiedad, propertybuyad.classifiedad  do |classifiedad_form| %>
+    <div>
+        <%= classifiedad_form.hidden_field :id %>
+        <label>Titre</label>
+        <%= classifiedad_form.text_field (:title), class:"input" %>
+
+        <h2>Récompenses</h2>
+        <h3>Je veux bénéfier du réseaux des Helpers Professionnels</h3>
+        <div>
+            <label>Récompense fixe </label>
+            <%= classifiedad_form.text_field (:rewardPro), class:"input" %>
+        </div>
+        <div>
+            <label>Récompense en % du prix du bien</label>
+            <%= classifiedad_form.text_field (:rewardProPercent), class:"input" %>
+        </div>
+        
+        <h3>Je veux bénéfier du réseaux des Helpers Particulier</h3>
+        <div>
+            <label>Récompense fixe </label>
+            <%= classifiedad_form.text_field (:rewardInd), class:"input" %>
+        </div>
+        <div>
+            <label>Récompense en % du prix du bien</label>
+            <%= classifiedad_form.text_field (:rewardIndPercent), class:"input" %>
+        </div>
+    </div>
+    <div>
+        <h2>Où Souhaitez vous que le bien se situe?</h2>
+        
+    </div>        
+    <%= classifiedad_form.fields_for :localisation, propertybuyad.classifiedad.localisation  do |localisation_form| %>
+        <div>
+            <%= classifiedad_form.hidden_field :id %>
+            <div>
+                <label>Quartier</label>
+                <%= localisation_form.text_field (:district), class:"input" %>
+            </div>
+            <div>
+                <label>Adresse</label>
+                <%= localisation_form.text_field (:street), class:"input" %>
+            </div>
+            <div>
+                <label>Ville</label>
+                <%= localisation_form.text_field (:city), class:"input" %>
+            </div>
+            <div>
+                <label>Département</label>
+                <%= localisation_form.text_field (:dept), class:"input" %>
+            </div>
+            <div>
+                <label>Région</label>
+                <%= localisation_form.text_field (:region), class:"input" %>
+            </div>
+        </div>
+    <% end %>
+<% end %>
