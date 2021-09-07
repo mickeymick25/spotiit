@@ -1,11 +1,3 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-
 Type.create(sector: 'immo', catetory: 'sharedfeatures', typeName: 'Ascenseur', typekey: 'lift')
 Type.create(sector: 'immo', catetory: 'sharedfeatures', typeName: 'Etage', typekey: 'floor')
 Type.create(sector: 'immo', catetory: 'sharedfeatures', typeName: 'Accès handicapé', typekey: 'ramp')
@@ -24,6 +16,8 @@ Type.create(sector: 'immo', catetory: 'insidefeatures', typeName: 'Cheminée', t
 Type.create(sector: 'immo', catetory: 'insidefeatures', typeName: 'Parquet', typekey: 'woodenfloor')
 Type.create(sector: 'immo', catetory: 'insidefeatures', typeName: 'WC séparés', typekey: 'separatewc')
 Type.create(sector: 'immo', catetory: 'insidefeatures', typeName: 'Rangements', typekey: 'storage')
+Type.create(sector: 'immo', catetory: 'propertytypes', typeName: 'Appartement', typekey: 'Appartment')
+Type.create(sector: 'immo', catetory: 'propertytypes', typeName: 'Maison', typekey: 'House')
 Type.create(sector: 'immo', catetory: 'propertytypes', typeName: 'Loft/atelier', typekey: 'Loft/Workshop')
 Type.create(sector: 'immo', catetory: 'propertytypes', typeName: 'parking/box', typekey: 'Parking / Box')
 Type.create(sector: 'immo', catetory: 'propertytypes', typeName: 'Château ', typekey: 'Castle')
@@ -45,6 +39,6 @@ Type.create(sector: 'immo', catetory: 'propertydetails', typeName: 'Surface habi
 Type.create(sector: 'immo', catetory: 'propertydetails', typeName: 'Surface terrain min', typekey: 'landarea')
 Type.create(sector: 'immo', catetory: 'propertydetails', typeName: 'Nombre de pièces ', typekey: 'rooms')
 Type.create(sector: 'immo', catetory: 'propertydetails', typeName: 'Nombre de chambres', typekey: 'bedrooms')
-Type.create(sector: 'immo', catetory: 'propertydetails', typeName: 'Villes', typekey: 'cities')
-Type.create(sector: 'immo', catetory: 'propertydetails', typeName: 'Départements', typekey: 'dept')
-Type.create(sector: 'immo', catetory: 'propertydetails', typeName: 'Lieu + km', typekey: 'area')
+Type.create(sector: 'immo', catetory: 'propertylocations', typeName: 'Villes', typekey: 'cities')
+Type.create(sector: 'immo', catetory: 'propertylocations', typeName: 'Départements', typekey: 'dept')
+Type.create(sector: 'immo', catetory: 'propertylocations', typeName: 'Lieu + km', typekey: 'area')
