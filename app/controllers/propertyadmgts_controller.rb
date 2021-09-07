@@ -95,7 +95,8 @@ class PropertyadmgtsController < ApplicationController
     end
 
     def adfeature_params
-        params.require(:propertyadmgt).permit(:has_lift, :lift_desc, :has_caretaker, :caretaker_desc, :has_balcony, :balcony_desc, :has_terrace, :terrace_desc, :has_garden, :garden_desc, :poool_desc)
+        params.require(:propertyadmgt).permit(:has_lift, :lift_desc, :has_caretaker, :caretaker_desc, :has_balcony, :balcony_desc, :has_terrace, :terrace_desc, :has_garden, :garden_desc, 
+            :has_pool, :pool_desc, :has_fireplace, :fireplace_desc,:has_woodenfloor, :woodenfloor_desc, :has_separatewc, :separatewc_desc,:has_storage, :storage_desc, :has_fiber, :fiber_desc)
     end
 
 
@@ -144,25 +145,45 @@ class PropertyadmgtsController < ApplicationController
             if !adfeature.nil?
                 @propertyadmgt.attributes = {has_lift: 1, lift_desc: adfeature.comment}
             end
-            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 2).first
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 4).first
             if !adfeature.nil?
                 @propertyadmgt.attributes = {has_caretaker: 1, caretaker_desc: adfeature.comment}
             end
-            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 3).first
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 9).first
             if !adfeature.nil?
                 @propertyadmgt.attributes = {has_balcony: 1, balcony_desc: adfeature.comment}
             end
-            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 4).first
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 10).first
             if !adfeature.nil?
                 @propertyadmgt.attributes = {has_terrace: 1, terrace_desc: adfeature.comment}
             end
-            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 5).first
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 12).first
             if !adfeature.nil?
                 @propertyadmgt.attributes = {has_garden: 1, garden_desc: adfeature.comment}
             end
-            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 6).first
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 16).first
             if !adfeature.nil?
                 @propertyadmgt.attributes = {has_pool: 1, pool_desc: adfeature.comment}
+            end
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 18).first
+            if !adfeature.nil?
+                @propertyadmgt.attributes = {has_pool: 1, storage_desc: adfeature.comment}
+            end
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 8).first
+            if !adfeature.nil?
+                @propertyadmgt.attributes = {has_pool: 1, fiber_desc: adfeature.comment}
+            end
+
+            adfeature = @propertyad.classifiedad.adfeatures.where(type_id: 17).first
+            if !adfeature.nil?
+                @propertyadmgt.attributes = {has_pool: 1, separatewc_desc: adfeature.comment}
             end
       
         end
