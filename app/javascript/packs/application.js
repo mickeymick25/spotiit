@@ -9,6 +9,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 
 import "stylesheets/application.scss"
+import "propertybuyads.js"
 
 const images = require.context("../images", true)
 const imagePath = name => images(name, true)
