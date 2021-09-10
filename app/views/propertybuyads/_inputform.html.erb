@@ -1,8 +1,10 @@
-<%= javascript_tag 'propertybuyads' %>
+
 
 <%= form_for @propertybuyad do |f| %>
+    <%= display_errors_for(f.object) %>
+    
     <!-- #some fields for the @person object like:-->
-    <%= render partial:'shared/inputclassified' , locals: {propertybuyad: @propertybuyad, f: f} %>
+    <%= render partial:'shared/inputclassified' , locals: {classifiedad: @propertybuyad.classifiedad, f: f} %>
     
     <div>
         <div>

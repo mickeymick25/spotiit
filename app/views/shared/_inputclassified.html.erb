@@ -1,35 +1,44 @@
- <%= f.fields_for :classifiedad, propertybuyad.classifiedad  do |classifiedad_form| %>
+ <%= f.fields_for :classifiedad , @propertybuyad.classifiedad  do |classifiedad_form| %>
+    <%= display_errors_for(classifiedad_form.object) %>
     <div>
         <%= classifiedad_form.hidden_field :id %>
         <label>Titre</label>
         <%= classifiedad_form.text_field (:title), class:"input" %>
 
         <h2>Récompenses</h2>
+        <%= classifiedad_form.radio_button :fixedreward, true, checked: true , data:{behavior:"showfixed"} %>  Récompense fixe
+        <%= classifiedad_form.radio_button :fixedreward, false , data:{behavior:"showpercent"} %> Pourcentage du prix du bien
         <h3>Je veux bénéfier du réseaux des Helpers Professionnels</h3>
-        <div>
+
+        <div id="div_rewardPro">
             <label>Récompense fixe </label>
             <%= classifiedad_form.text_field (:rewardPro), class:"input" %>
         </div>
-        <div>
+        <div  id="div_rewardProPercent" style="display:none" >
             <label>Récompense en % du prix du bien</label>
             <%= classifiedad_form.text_field (:rewardProPercent), class:"input" %>
         </div>
-        
+      
         <h3>Je veux bénéfier du réseaux des Helpers Particulier</h3>
-        <div>
+            
+        <div id="div_rewardInd">
             <label>Récompense fixe </label>
             <%= classifiedad_form.text_field (:rewardInd), class:"input" %>
         </div>
-        <div>
+        <div  id="div_rewardIndPercent" style="display:none">
             <label>Récompense en % du prix du bien</label>
             <%= classifiedad_form.text_field (:rewardIndPercent), class:"input" %>
+        </div>
+        <div>
+            <label>Courte description</label>
+            <%= classifiedad_form.text_field (:short_description), class:"input" %>
         </div>
     </div>
     <div>
         <h2>Où Souhaitez vous que le bien se situe?</h2>
         
     </div>        
-    <%= classifiedad_form.fields_for :localisation, propertybuyad.classifiedad.localisation  do |localisation_form| %>
+    <%= classifiedad_form.fields_for :localisation, @propertybuyad.classifiedad.localisation  do |localisation_form| %>
         <div>
             <%= classifiedad_form.hidden_field :id %>
             <div>

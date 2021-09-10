@@ -44,4 +44,12 @@ module ApplicationHelper
         end
         link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
       end
+
+      # Displays the errors for a model instance if there are any
+      def display_errors_for(object)
+        return unless object.errors.any?
+        
+        render partial: 'shared/errors',  
+                locals: { object: object }
+      end
 end
