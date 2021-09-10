@@ -194,7 +194,8 @@ CREATE TABLE public.classifiedads (
     updated_at timestamp(6) without time zone NOT NULL,
     localisation_id bigint,
     adstatus public.ads_status,
-    sector public.sector_type
+    sector public.sector_type,
+    fixedreward boolean
 );
 
 
@@ -314,7 +315,7 @@ CREATE TABLE public.propertyadwishes (
     comment character varying,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    propertybuyad_id bigint NOT NULL,
+    propertybuyad_id bigint,
     type_id bigint NOT NULL,
     propertytypewish_id integer,
     propertystatewish_id integer,
@@ -815,6 +816,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210806181914'),
 ('20210806182049'),
 ('20210806182121'),
-('20210807204235');
+('20210807204235'),
+('20210908201550');
 
 
