@@ -1,19 +1,12 @@
 class PropertyadmgtsController < ApplicationController
     
     def index
-        @propertyads= Propertyad.includes(:classifiedad).all  
+        @propertyads= Propertyad.includes(classifiedad: [:localisation]).all  
     end
     
     def show
-        @propertyad = Propertyad.find(params[:id])
+        @propertyad = Propertyad.includes(classifiedad: [:localisation]).find(params[:id])
 
-        # if !propertyad.classifiedad.localisation.nil?
-        #     @propertyadmgt.attributes = {street: propertyad.classifiedad.localisation.street,
-        #                     district: propertyad.classifiedad.localisation.district,
-        #                     city: propertyad.classifiedad.localisation.city,
-        #                     dept: propertyad.classifiedad.localisation.dept,
-        #                     region: propertyad.classifiedad.localisation.region}
-        # ends
     end
 
     def new
