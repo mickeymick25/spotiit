@@ -14,7 +14,7 @@ class Classifiedad < ApplicationRecord
     accepts_nested_attributes_for :propertyad, allow_destroy: true 
 
     validates :title, :short_description, presence: {message: ": le champs est obligatoire."}
-    validates :rewardPro, :rewardInd, :rewardProPercent, :rewardIndPercent, numericality: { only_integer: true }, allow_nil: true
+    validates :rewardPro, :rewardInd, :rewardProPercent, :rewardIndPercent, numericality: true, allow_nil: true
     validate :reward_validation
 
     after_initialize :set_default_adstatus, :if => :new_record?
@@ -26,14 +26,16 @@ class Classifiedad < ApplicationRecord
     private
 
     def reward_validation
-        if fixedreward.nil?
+        puts "########### reward_validation"
+        puts fixedreward.inspect
+        if !fixedreward.nil? && fixedreward.to_s == "true"
             if rewardPro.nil? && rewardInd.nil?
                 errors.add('Récompense',': Vous devez saisir au moins un montant')
             else 
-                if rewardPro < 0  || 50000 < rewardPro
+                if rewardPro.nil? && (rewardPro < 0  || 50000 < rewardPro)
                     errors.add('Récompense Pro',": Le montant de la récompense n'est pas valide")
                 end
-                if rewardInd < 0  || 50000 < rewardInd
+                if rewardPro.nil? && (rewardInd < 0  || 50000 < rewardInd)
                     errors.add('Récompense Particulier',": Le montant de la récompense n'est pas valide")
                 end
             end
@@ -41,10 +43,10 @@ class Classifiedad < ApplicationRecord
             if rewardProPercent.nil? && rewardIndPercent.nil?
                 errors.add('Récompense',': Vous devez saisir au moin un pourcentage')
             else 
-                if rewardProPercent < 0  || 100 < rewardProPercent
+                if rewardProPercent.nil? && (rewardProPercent < 0  || 100 < rewardProPercent)
                     errors.add('RécompensePro',": Le % de la récompense n'est pas valide")
                 end
-                if rewardIndPercent < 0  || 100 < rewardIndPercent
+                if rewardIndPercent.nil? && ( rewardIndPercent < 0  || 100 < rewardIndPercent)
                     errors.add('RécompenseParticulier',": Le % de la récompense n'est pas valide")
                 end
             end        
