@@ -17,8 +17,8 @@ module ApplicationHelper
         if options.include? :partial
           partial = options[:partial]
         else
-          #partial = association.to_s.singularize + '_fields'
-          partial = 'inputwish_fields'
+          partial = association.to_s.singularize + '_fields'
+          # partial = 'inputwish_fields'
         end
       
         # Render the form fields from a file with the association name provided
@@ -48,8 +48,9 @@ module ApplicationHelper
       # Displays the errors for a model instance if there are any
       def display_errors_for(object)
         return unless object.errors.any?
-        
+
         render partial: 'shared/errors',  
                 locals: { object: object }
       end
+
 end

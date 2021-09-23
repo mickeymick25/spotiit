@@ -58,3 +58,16 @@
             </p>
         </div> 
     <% end %>
+    <div>
+    Images: 
+        <% ad.classifiedad.propertyphotos.each do |photo| %>
+            <div style="width:300">
+                <%= photo.title %>
+                <div><%= photo.type_id %></div>
+                <%= photo.comment %>
+                <% if photo.image_url %>
+                    <%= image_tag photo.image_url, style:' height:200px' %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>

@@ -5,13 +5,12 @@ class Classifiedad < ApplicationRecord
     has_one :propertyad, dependent: :destroy, validate: false
     has_one :propertybuyad, dependent: :destroy, validate: false
     belongs_to :localisation , optional: true
-    has_many :adfeatures, dependent: :destroy
-    #has_many :types, through: :adfeatures 
-    
-    accepts_nested_attributes_for :adfeatures, allow_destroy: true 
-    accepts_nested_attributes_for :localisation, allow_destroy: true 
-    accepts_nested_attributes_for :propertybuyad, allow_destroy: true 
+    has_many :propertyphotos, dependent: :destroy
+
     accepts_nested_attributes_for :propertyad, allow_destroy: true 
+    accepts_nested_attributes_for :propertybuyad, allow_destroy: true 
+    accepts_nested_attributes_for :localisation, allow_destroy: true 
+    accepts_nested_attributes_for :propertyphotos, allow_destroy: true
 
     validates :title, :short_description, presence: {message: ": le champs est obligatoire."}
     validates :rewardPro, :rewardInd, :rewardProPercent, :rewardIndPercent, numericality: true, allow_nil: true

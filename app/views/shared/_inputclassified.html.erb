@@ -1,4 +1,4 @@
- <%= f.fields_for :classifiedad , @propertybuyad.classifiedad  do |classifiedad_form| %>
+ <%= f.fields_for :classifiedad   do |classifiedad_form| %>
     <%= display_errors_for(classifiedad_form.object) %>
     <div>
         <%= classifiedad_form.hidden_field :id %>
@@ -38,7 +38,7 @@
         <h2>Où Souhaitez vous que le bien se situe?</h2>
         
     </div>        
-    <%= classifiedad_form.fields_for :localisation, @propertybuyad.classifiedad.localisation  do |localisation_form| %>
+    <%= classifiedad_form.fields_for :localisation do |localisation_form| %>
         <div>
             <%= classifiedad_form.hidden_field :id %>
             <div>
@@ -63,4 +63,10 @@
             </div>
         </div>
     <% end %>
+    <div>
+        <%= classifiedad_form.fields_for :propertyphotos , html: { enctype: "multipart/form-data" }  do |f| %>
+            <% render partial:"shared/propertyphoto_fields", locals: {f: f} %>
+        <% end %>
+        <%= link_to_add_fields2 "Nouvelle photo", classifiedad_form, :propertyphotos, partial:"shared/propertyphoto_fields" %>
+    </div>
 <% end %>

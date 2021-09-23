@@ -1,0 +1,12 @@
+<div>
+    photos :
+    <%= f.hidden_field :id %>
+    <%= f.text_field :title, class:"input" %>
+    <%= f.text_field :type_id, class:"input" %>
+    <%= f.text_field :comment, class:"input" %>
+    <div>  
+        <%= f.label :image  %>
+        <%= f.hidden_field :image, value: f.object.cached_image_data, class:"input" %>
+        <%= f.file_field :image %>
+    </div>
+</div>
