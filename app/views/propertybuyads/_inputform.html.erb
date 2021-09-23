@@ -1,5 +1,3 @@
-
-
 <%= form_for @propertybuyad do |form| %>
     <%= display_errors_for(form.object) %>
     
@@ -29,7 +27,7 @@
                 <%= render partial: "inputwish_fields", locals: { category: 'propertytypes' , f: typebuilder, newparent: form.object.persisted? , wishtypeName: typebuilder.object.type.typeName }  %>
             <% end %> 
             <% if !form.object.id.nil? %>
-                <%= link_to_add_fields2  "Nouveau souhait", form, :propertytypewishes, locals: { category: 'propertytypes' , newparent: true}  %>
+                <%= link_to_add_fields2  "Nouveau souhait", form, :propertytypewishes, locals: { category: 'propertytypes' , newparent: true} , partial:'inputwish_fields' %>
             <% end %>
         </div>
     <div>
@@ -39,10 +37,10 @@
         </div>
         <div>
             <%= form.fields_for :propertystatewishes do |statebuilder| %>
-                <%= render partial: "inputwish_fields", locals: { category: 'propertystates' , f: statebuilder, newparent: form.object.persisted? , wishtypeName: statebuilder.object.type.typeName }  %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertystates' , f: statebuilder, newparent: form.object.persisted? }  %>
             <% end %> 
             <% if !form.object.id.nil? %>
-                <%= link_to_add_fields2   "Nouveau souhait", form, :propertystatewishes, locals: { category: 'propertystates' , newparent: true}  %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :propertystatewishes, locals: { category: 'propertystates' , newparent: true}, partial:'inputwish_fields' %>
             <% end %>
         </div>
     </div>
@@ -52,10 +50,10 @@
         </div>
         <div>
             <%= form.fields_for :propertydetailwishes do |detailsbuilder| %>
-                <%= render partial: "inputwish_fields", locals: { category: 'propertydetails' , f: detailsbuilder, newparent: form.object.persisted? , wishtypeName: detailsbuilder.object.type.typeName }  %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertydetails' , f: detailsbuilder, newparent: form.object.persisted? }  %>
             <% end %> 
             <% if !form.object.id.nil? %>
-                <%= link_to_add_fields2   "Nouveau souhait", form, :propertydetailwishes, locals: { category: 'propertydetails' , newparent: true}  %>
+                <%= link_to_add_fields2   "Nouveau souhait", form , :propertydetailwishes, locals: { category: 'propertydetails' , newparent: true}, partial:'inputwish_fields' %>
             <% end %>
         </div>
     </div>
@@ -65,10 +63,10 @@
         </div>
         <div>
             <%= form.fields_for :insidefeaturewishes do |insidebuilder| %>
-                <%= render partial: "inputwish_fields", locals: { category: 'insidefeatures' , f: insidebuilder, newparent: form.object.persisted? , wishtypeName: insidebuilder.object.type.typeName }  %>
+                <%= render partial: "inputwish_fields", locals: { category: 'insidefeatures' , f: insidebuilder, newparent: form.object.persisted?}  %>
             <% end %> 
             <% if !form.object.id.nil? %>
-                <%= link_to_add_fields2   "Nouveau souhait", form, :insidefeaturewishes, locals: { category: 'insidefeatures', newparent: true}  %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :insidefeaturewishes, locals: { category: 'insidefeatures', newparent: true} , partial:'inputwish_fields' %>
             <% end %>
         </div>
     </div>
@@ -77,10 +75,10 @@
         </div>
         <div>
             <%= form.fields_for :outsidefeaturewishes do |outsidebuilder| %>
-                <%= render partial: "inputwish_fields", locals: { category: 'outsidefeatures' , f: outsidebuilder, newparent: form.object.persisted? , wishtypeName: outsidebuilder.object.type.typeName }  %>
+                <%= render partial: "inputwish_fields", locals: { category: 'outsidefeatures' , f: outsidebuilder, newparent: form.object.persisted? }  %>
             <% end %> 
             <% if !form.object.id.nil? %>
-                <%= link_to_add_fields2   "Nouveau souhait", form, :outsidefeaturewishes, locals: { category: 'outsidefeatures', newparent: true}  %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :outsidefeaturewishes, locals: { category: 'outsidefeatures', newparent: true}  , partial:'inputwish_fields' %>
             <% end %>
         </div>
     </div>
@@ -90,10 +88,10 @@
         </div>
         <div>
             <%= form.fields_for :sharedfeaturewishes do |sharedbuilder| %>
-                <%= render partial: "inputwish_fields", locals: { category: 'sharedfeatures' , f: sharedbuilder, newparent: form.object.persisted? , wishtypeName: sharedbuilder.object.type.typeName }  %>
+                <%= render partial: "inputwish_fields", locals: { category: 'sharedfeatures' , f: sharedbuilder, newparent: form.object.persisted? }  %>
             <% end %> 
             <% if !form.object.id.nil? %>
-                <%= link_to_add_fields2   "Nouveau souhait", form, :sharedfeaturewishes, locals: { category: 'sharedfeatures', newparent: true}  %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :sharedfeaturewishes, locals: { category: 'sharedfeatures', newparent: true}, partial:'inputwish_fields' %>
             <% end %>
         </div>
     </div>

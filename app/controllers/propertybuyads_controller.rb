@@ -21,14 +21,10 @@ class PropertybuyadsController < ApplicationController
     puts "update Propertybuyad ###################################"
 
     @propertybuyad= Propertybuyad.includes(:classifiedad).find(params[:id])
-    
-    # if @propertybuyad.classifiedad.update(classifiedad2_params[:classifiedad]
 
-     @propertybuyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
-
-    # classifiedad.assign_attributes(classifiedad_params[:classifiedad])
+    @propertybuyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
     
-    @propertybuyad.classifiedad.valid?
+    @propertybuyad.classifiedad.valid?    
 
     if @propertybuyad.classifiedad.errors.count > 0
       render 'edit' and return
@@ -65,10 +61,10 @@ class PropertybuyadsController < ApplicationController
     @propertybuyad = Propertybuyad.new
     
     @propertybuyad.classifiedad = Classifiedad.new
-    puts @propertybuyad.classifiedad.inspect
     
-    @classifiedad= @propertybuyad.classifiedad
+    # @classifiedad= @propertybuyad.classifiedad
     @propertybuyad.classifiedad.localisation = Localisation.new
+    @propertybuyad.classifiedad.propertyphotos.new()
 
 
     init_propertywishes @propertybuyad
@@ -78,16 +74,20 @@ class PropertybuyadsController < ApplicationController
     
     puts "Create Propertybuyad ###################################"
     
-     propertybuyad = Propertybuyad.new (all_params)
+    propertybuyad = Propertybuyad.new (all_params)
     
-    #  classifiedad = Classifiedad.new (classifiedad_params[:classifiedad] )
-    #  classifiedad.sector = "Immobilier"  
-    #  classifiedad.adstatus = "to_validate"
-    
-    #  propertybuyad.classifiedad = classifiedad
     propertybuyad.classifiedad.sector = "Immobilier"
     propertybuyad.classifiedad.adstatus = "to_validate"
     
+    propertybuyad.classifiedad.valid?    
+
+    if propertybuyad.classifiedad.errors.count > 0
+      render 'edit' and return
+    end
+    
+    self.calcul_reward 
+    
+    puts propertybuyad.classifiedad.propertyphotos.inspect
     if propertybuyad.save
         puts "save------------------------------ca a marché"
         redirect_to propertybuyads_path and return
@@ -157,7 +157,9 @@ class PropertybuyadsController < ApplicationController
 
   def all_params
     params.require(:propertybuyad).permit(:id,:budget, :supply, :description,
-      classifiedad_attributes: [:id ,:title,:short_description,:fixedreward, :sector, :rewardPro, :rewardProPercent,:rewardInd, :rewardIndPercent, localisation_attributes: [:id,:number, :street, :district, :city, :dept, :region ]],
+      classifiedad_attributes: [:id ,:title,:short_description,:fixedreward, :sector, :rewardPro, :rewardProPercent,:rewardInd, :rewardIndPercent, 
+        localisation_attributes: [:id,:number, :street, :district, :city, :dept, :region ], 
+        propertyphotos_attributes: [:id,:title, :type_id, :comment, :image] ],
       propertytypewishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy],
       propertystatewishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy ],
       propertydetailwishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy ],

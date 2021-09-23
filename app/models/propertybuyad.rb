@@ -28,7 +28,7 @@ class Propertybuyad < ApplicationRecord
 
     has_many :propertylocationwishes, class_name: 'Propertyadwish', foreign_key: 'propertylocationwish_id', dependent: :destroy
 
-    belongs_to :classifiedad, validate: false
+    belongs_to :classifiedad, validate: false, dependent: :destroy
     accepts_nested_attributes_for :classifiedad, allow_destroy: true 
 
     validates_each :budget, :supply, :description do |record, attr, value| record.errors.add(attr, '-- le champs ' + attr.to_s + ' est obligatoire') if value.nil? end
