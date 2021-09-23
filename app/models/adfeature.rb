@@ -1,5 +1,9 @@
 class Adfeature < ApplicationRecord
 
-    belongs_to :classifiedad
+    attr_accessor :selected
+
+    belongs_to :propertyad
     belongs_to :type
+
+    
 end
