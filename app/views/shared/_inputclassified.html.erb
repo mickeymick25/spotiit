@@ -2,8 +2,6 @@
     <%= display_errors_for(classifiedad_form.object) %>
     <div>
         <%= classifiedad_form.hidden_field :id %>
-        <label>Titre</label>
-        <%= classifiedad_form.text_field (:title), class:"input" %>
 
         <h2>Récompenses</h2>
         <%= classifiedad_form.radio_button :fixedreward, true, checked: true , data:{behavior:"showfixed"} %>  Récompense fixe

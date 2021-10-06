@@ -10,11 +10,11 @@
 
         <div>
             <label>Type de bien</label>
-            <%= f.select(:propertytype, Propertyad.propertytypes {|properptytype| [propertytype.value,propertytype.key]}) %>
+            <%= f.select(:propertytype, Propertyad.propertytypes {|properptytype| [propertytype.key,propertytype.key]}) %>
         </div>
         <div>
             <label>Nature du bien</label>
-            <%= f.select(:propertystate, Propertyad.propertystates {|propertystate| [propertystate.value,propertystate.key]}) %>
+            <%= f.select(:propertystate, Propertyad.propertystates {|propertystate| [propertystate.key,propertystate.key]}) %>
         </div>
         <div>
             <label>Prix de vente (Net vendeur)</label>

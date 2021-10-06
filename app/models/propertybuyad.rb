@@ -34,7 +34,7 @@ class Propertybuyad < ApplicationRecord
     validates_each :budget, :supply, :description do |record, attr, value| record.errors.add(attr, '-- le champs ' + attr.to_s + ' est obligatoire') if value.nil? end
     validates :budget, :supply, numericality: { only_integer: true }
     validates :budget, :supply, inclusion: { in: 0..50000000, message: " doit etre supérieur à 0" }
-    validates_associated :classifiedad
+    validates_associated :classifiedad, dependent: :destroy
 
     # after_initialize :set_property_wish
        

@@ -12,7 +12,7 @@ class Classifiedad < ApplicationRecord
     accepts_nested_attributes_for :localisation, allow_destroy: true 
     accepts_nested_attributes_for :propertyphotos, allow_destroy: true
 
-    validates :title, :short_description, presence: {message: ": le champs est obligatoire."}
+    # validates :title, :short_description, presence: {message: ": le champs est obligatoire."}
     validates :rewardPro, :rewardInd, :rewardProPercent, :rewardIndPercent, numericality: true, allow_nil: true
     validate :reward_validation
 
@@ -26,7 +26,7 @@ class Classifiedad < ApplicationRecord
 
     def reward_validation
         puts "########### reward_validation"
-        puts fixedreward.inspect
+        
         if !fixedreward.nil? && fixedreward.to_s == "true"
             if rewardPro.nil? && rewardInd.nil?
                 errors.add('Récompense',': Vous devez saisir au moins un montant')

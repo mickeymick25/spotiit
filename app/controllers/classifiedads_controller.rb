@@ -1,6 +1,6 @@
 class ClassifiedadsController < ApplicationController
   def index
-    @classifiedads = Classifiedad.all 
+    @classifiedads = Classifiedad.all
   end
 
   def show

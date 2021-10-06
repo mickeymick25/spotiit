@@ -32,6 +32,7 @@ class PropertybuyadsController < ApplicationController
     # raise ActiveRecord::RecordInvalid.new(classifiedad)
 
     self.calcul_reward 
+    self.set_title
     
     if @propertybuyad.update(all_params)
         puts "update------------------------------ca a marché"    
@@ -79,7 +80,7 @@ class PropertybuyadsController < ApplicationController
     propertybuyad.classifiedad.sector = "Immobilier"
     propertybuyad.classifiedad.adstatus = "to_validate"
     
-    propertybuyad.classifiedad.valid?    
+    propertybuyad.classifiedad.valid?
 
     if propertybuyad.classifiedad.errors.count > 0
       render 'edit' and return
@@ -120,6 +121,29 @@ class PropertybuyadsController < ApplicationController
       end
     end
   end
+  
+  def set_title ()
+    
+    propertydetails = params[:propertybuyad][:propertydetailwishes_attributes].values
+    puts "############ set_title"
+    puts propertydetails.inspect
+
+    types = Type.select(:typekey, :id).where(catetory: 'propertydetails').to_a
+
+    # rooms = propertydetails.select{|i,v| v[:type_id] == types.find{ |i| i.typekey == 'rooms'}.id}
+    rooms = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'rooms'}.id.to_s}[0][:comment].to_i
+    bedrooms = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'bedrooms'}.id.to_s}[0][:comment].to_i
+    livingarea = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'livingarea'}.id.to_s}[0][:comment].to_i
+    # landarea = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'landarea'}.id.to_s}[0][:comment].to_i
+
+    
+    title = "#{rooms} pièces"
+    title = "#{title}, #{bedrooms} chambres" 
+    title = "#{title}, #{livingarea.round(0)}m2" 
+    # title = "#{title}, terrain #{landarea}m2"  
+
+    params[:propertybuyad][:classifiedad_attributes][:title] = title
+  end
 
   def calcul_reward ()
     budget =  params[:propertybuyad][:budget].to_i
@@ -130,12 +154,10 @@ class PropertybuyadsController < ApplicationController
     rewardIndPercent =  params[:propertybuyad][:classifiedad_attributes][:rewardIndPercent]
         
     if fixedreward == "true"
-      puts fixedreward.inspect
       params[:propertybuyad][:classifiedad_attributes][:rewardProPercent] = (rewardPro/budget*100).round(2)
       params[:propertybuyad][:classifiedad_attributes][:rewardIndPercent] = (rewardInd/budget*100).round(2)
       puts params[:propertybuyad][:classifiedad_attributes][:rewardIndPercent].inspect
     else
-      puts fixedreward.inspect
       params[:propertybuyad][:classifiedad][:rewardPro] = (rewardProPercent/100*budget).round
       params[:propertybuyad][:classifiedad][:rewardInd] = (rewardIndPercent/100*budget).round
       puts params[:propertybuyad][:classifiedad][:rewardInd] .inspect
@@ -165,7 +187,7 @@ class PropertybuyadsController < ApplicationController
       propertydetailwishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy ],
       sharedfeaturewishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy ],
       insidefeaturewishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy ],
-      outsidefeaturewishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy ])    
+      outsidefeaturewishes_attributes: [:id, :type_id, :wishlevel, :comment, :_destroy ])
   end
 
 end

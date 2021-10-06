@@ -1,5 +1,6 @@
-<div style="border:1px solid">
 
+<% Rails.application.routes.recognize_path(request.referrer).inspect %>
+<div style="border:1px solid">
     <%= render partial:'shared/showclassified', locals: {ad:propertyad} %>
     <div>
         <p>Détails du bien</p>        

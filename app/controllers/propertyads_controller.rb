@@ -26,6 +26,7 @@ class PropertyadsController < ApplicationController
     end
     
     calcul_reward()
+    set_title()
       
     self.calcul_reward 
     
@@ -76,7 +77,7 @@ class PropertyadsController < ApplicationController
 
     propertyad.classifiedad.sector = "Immobilier"
     propertyad.classifiedad.adstatus = "to_validate"
-    
+    propertyad.classifiedad.title = 
 
     @propertyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
     
@@ -87,7 +88,8 @@ class PropertyadsController < ApplicationController
     end
     
     self.calcul_reward()
-
+    self.set_title()
+    
     if propertyad.save
         puts "save------------------------------ca a marché"
         redirect_to propertyads_path and return
@@ -135,6 +137,22 @@ class PropertyadsController < ApplicationController
     end
   end
 
+
+  def set_title ()
+    propertytype =   params[:propertyad][:propertytype]
+    rooms =   params[:propertyad][:rooms]
+    bedrooms =   params[:propertyad][:bedrooms]
+    livingarea =   params[:propertyad][:livingarea].to_d
+    landarea =   params[:propertyad][:landarea]
+    
+    title = "#{rooms} pièces"
+    title = "#{title}, #{bedrooms} chambres" if !bedrooms.empty?
+    title = "#{title}, #{livingarea.round(0)}m2" if !livingarea.nil?
+    title = "#{title}, terrain #{landarea}m2" if !landarea.empty? 
+
+    params[:propertyad][:classifiedad_attributes][:title] = title
+  end
+
   def calcul_reward ()
     netprice =  params[:propertyad][:netprice].to_i
     fixedreward =  params[:propertyad][:classifiedad_attributes][:fixedreward]
@@ -144,12 +162,10 @@ class PropertyadsController < ApplicationController
     rewardIndPercent =  params[:propertyad][:classifiedad_attributes][:rewardIndPercent]
     
     if fixedreward == "true"
-      puts fixedreward.inspect
       params[:propertyad][:classifiedad_attributes][:rewardProPercent] = (rewardPro/netprice*100).round(2)
       params[:propertyad][:classifiedad_attributes][:rewardIndPercent] = (rewardInd/netprice*100).round(2)
       puts params[:propertyad][:classifiedad_attributes][:rewardIndPercent].inspect
     else
-      puts fixedreward.inspect
       params[:propertyad][:classifiedad][:rewardPro] = (rewardProPercent/100*netprice).round
       params[:propertyad][:classifiedad][:rewardInd] = (rewardIndPercent/100*netprice).round
       puts params[:propertyad][:classifiedad][:rewardInd] .inspect
