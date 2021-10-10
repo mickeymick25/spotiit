@@ -1,8 +1,12 @@
 class PropertybuyadsController < ApplicationController
 
   def index
-    @propertybuyads= Propertybuyad.includes(classifiedad: [:localisation], propertytypewishes: [:type], propertystatewishes: [:type], 
-      propertydetailwishes: [:type], insidefeaturewishes: [:typer], outsidefeaturewishes:[:type], sharedfeaturewishes: [:type] ).all
+    if current_user.nil?
+      @classifiedads = Classifiedad.includes(:localisation, :propertyphotos).left_outer_joins(:propertyad).where('propertyads.classifiedad_id is null')
+    else
+      @propertybuyads= Propertybuyad.includes(classifiedad: [:localisation], propertytypewishes: [:type], propertystatewishes: [:type], 
+        propertydetailwishes: [:type], insidefeaturewishes: [:typer], outsidefeaturewishes:[:type], sharedfeaturewishes: [:type] ).all
+    end
   end
 
   def show

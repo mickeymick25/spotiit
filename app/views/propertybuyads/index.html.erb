@@ -1,18 +1,28 @@
-<%= render "shared/nav" %>
 
-<h1>Petites annonces Spotiit</h1>
-<% if @propertybuyads.present? %>
-    <% @propertybuyads.each do |propertybuyad| %>
-        
-        <%= render partial:'showform', locals: {propertybuyad:propertybuyad} %>
-        
-        <p> 
-            <a href="<%= propertybuyad_path(propertybuyad.id) %>" class="btn btn-default" >Voir l'annonce</a>
-            <a href="<%= edit_propertybuyad_path(propertybuyad.id) %>" class="btn btn-default">Editer l'annonce</a>
-            <a href="<%= propertybuyad_path(propertybuyad.id) %>"  data-confirm="Really?" data-method="delete" class="btn btn-default" %>Supprimer</a>
-        </p>
-    <% end%>    
+<% if user_signed_in? %> 
+    <%= render "shared/hero" %>
+
+    <h1>Petites annonces Spotiit</h1>
+    
+    <% if @propertybuyads.present? %>
+        <% @propertybuyads.each do |propertybuyad| %>
+            
+            <%= render partial:'showform', locals: {propertybuyad:propertybuyad} %>
+            
+            <p> 
+                <a href="<%= propertybuyad_path(propertybuyad.id) %>" class="btn btn-default" >Voir l'annonce</a>
+                <a href="<%= edit_propertybuyad_path(propertybuyad.id) %>" class="btn btn-default">Editer l'annonce</a>
+                <a href="<%= propertybuyad_path(propertybuyad.id) %>"  data-confirm="Really?" data-method="delete" class="btn btn-default" %>Supprimer</a>
+            </p>
+        <% end%>    
+    <% end %>
+    <p>
+        <a href="<%= new_propertybuyad_path %>">Nouvelle recherche de bien Immo</a>
+    </p> 
+<% else %>
+    <%= render "home/home" %>
 <% end %>
-<p>
-    <a href="<%= new_propertybuyad_path %>">Nouvelle recherche de bien Immo</a>
-</p>
+
+
+
+   

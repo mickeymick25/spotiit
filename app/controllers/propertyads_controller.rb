@@ -1,6 +1,11 @@
 class PropertyadsController < ApplicationController
   def index
-    @propertyads = Propertyad.includes(classifiedad: [:localisation, :propertyphotos], adfeatures: [:type]).all 
+    puts "###################" + current_user.inspect
+    if current_user.nil?
+      @classifiedads = Classifiedad.includes(:localisation, :propertyphotos, propertyad: [adfeatures: [:type]]).left_outer_joins(:propertybuyad).where('propertybuyads.classifiedad_id is null')
+    else
+      @propertyads = Propertyad.includes(classifiedad: [:localisation, :propertyphotos], adfeatures: [:type]).all   
+    end
   end
 
   def show
@@ -66,7 +71,7 @@ class PropertyadsController < ApplicationController
 
     set_featureids
 
-    @insidefeatures = @propertyad.adfeatures. where(type_id: Type.select(:id).where(catetory: 'insidefeatures'))
+    # @insidefeatures = @propertyad.adfeatures. where(type_id: Type.select(:id).where(catetory: 'insidefeatures'))
   end
 
   def create
