@@ -26,7 +26,7 @@ class Propertybuyad < ApplicationRecord
     accepts_nested_attributes_for :insidefeaturewishes, allow_destroy: true , reject_if: :propertywish_invalid
     accepts_nested_attributes_for :outsidefeaturewishes, allow_destroy: true , reject_if: :propertywish_invalid
 
-    has_many :propertylocationwishes, class_name: 'Propertyadwish', foreign_key: 'propertylocationwish_id', dependent: :destroy
+    # has_many :propertylocationwishes, class_name: 'Propertyadwish', foreign_key: 'propertylocationwish_id', dependent: :destroy
 
     belongs_to :classifiedad, validate: false, dependent: :destroy
     accepts_nested_attributes_for :classifiedad, allow_destroy: true 
@@ -36,14 +36,12 @@ class Propertybuyad < ApplicationRecord
     validates :budget, :supply, inclusion: { in: 0..50000000, message: " doit etre supérieur à 0" }
     validates_associated :classifiedad, dependent: :destroy
 
+    validate :mandatorywish
+
     # after_initialize :set_property_wish
-       
-    # def set_property_wish
-
+    # def set_property_wish 
     #     puts "set_property_wish---------------------------------------"
-  
     # end
-
 
     private
 
@@ -52,6 +50,19 @@ class Propertybuyad < ApplicationRecord
       if attributes["id"] == ""
         # puts attributes["wishlevel"].inspect
         attributes["wishlevel"] == "0"? true : false
+      end
+    end
+
+    def mandatorywish
+      puts "########### mandatorywish"
+      if propertydetailwishes.size < 3
+        errors.add('Détails du bien recherché',': Vous devez spécifier la superficie le nombre de pièces et de chambre souhaitées.')
+      end
+
+      propertydetailwishes.each do |wish|
+        if !Float(wish.comment)
+          errors.add(wish.type.typeName,': Vous devez saisir un nombre.')
+        end
       end
     end
 end
