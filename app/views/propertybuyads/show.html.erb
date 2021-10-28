@@ -1,5 +1,16 @@
 <% if user_signed_in? %>
-    <%= render 'landing' %>
+    <%= render 'home/landing' %>
+     <h1>Petites annonces Spotiit</h1>
+
+    <%= render partial:'showform', locals: {propertybuyad:@propertybuyad} %>
+
+    <p> 
+        <a href="<%= edit_propertybuyad_path(@propertybuyad.id) %>" class="btn btn-default">Editer l'annonce</a>
+        <a href="<%= propertybuyad_path(@propertybuyad.id) %>" data-confirm="Really?" data-method="delete" class="btn btn-default" %>Supprimer</a>
+    </p>
+    <p>
+        <a href="<%= propertybuyads_path %>"class="btn btn-default" >Annuler</a>
+    </p>    
 <% else %>
 	<%= render 'shared/hero_show' %>
     <h1>Petites annonces Spotiit</h1>

@@ -1,8 +1,12 @@
 <div>
     photos :
     <%= f.hidden_field :id %>
+    Titre :
     <%= f.text_field :title, class:"input" %>
-    <%= f.text_field :type_id, class:"input" %>
+    Object de la photo :
+    <%= f.select :type_id, options_from_collection_for_select(Type.where( 'catetory  = ?' ,local_assigns[:category].to_s ), :id, :typeName, f.object.type_id )  %>
+    </div>
+    Commentaire :
     <%= f.text_field :comment, class:"input" %>
     <div>  
         <%= f.label :image  %>
