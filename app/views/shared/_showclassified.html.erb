@@ -13,21 +13,14 @@
             <%= ad.classifiedad.adstatus %>
         </p>
         <p>
-            Récompense pour les Helpers Pro: 
-            <%= ad.classifiedad.rewardPro %>
+            Récompense : 
         </p>
-        <p> 
-            Récompense pour les Helpers Pro en %: 
-            <%= ad.classifiedad.rewardProPercent %>
-        </p>
-        <p> 
-            Récompense pour les Helpers Particulilers: 
-            <%= ad.classifiedad.rewardInd %>
-        </p>
-        <p> 
-            Récompense pour les  Helpers Particulier en % 
-            <%= ad.classifiedad.rewardIndPercent %>
-        </p>
+        <% ad.classifiedad.rewards.each do |reward| %>
+            <p>Pourcentage du buget :</p>
+            <div><%= reward.percent %></div>
+            <p>Montant de la Récompense:</p>
+            <div><%=reward.amount %></div>
+        <% end %>
         <p> 
             Petite description : 
             <%= ad.classifiedad.short_description %>
@@ -63,7 +56,7 @@
         <% ad.classifiedad.propertyphotos.each do |photo| %>
             <div style="width:300">
                 <%= photo.title %>
-                <div><%= photo.type_id %></div>
+                <div><%= photo.type.typeName %></div>
                 <%= photo.comment %>
                 <% if photo.image_url %>
                     <%= image_tag photo.image_url, style:' height:200px' %>

@@ -4,29 +4,12 @@
         <%= classifiedad_form.hidden_field :id %>
 
         <h2>Récompenses</h2>
-        <%= classifiedad_form.radio_button :fixedreward, true, checked: true , data:{behavior:"showfixed"} %>  Récompense fixe
-        <%= classifiedad_form.radio_button :fixedreward, false , data:{behavior:"showpercent"} %> Pourcentage du prix du bien
-        <h3>Je veux bénéfier du réseaux des Helpers Professionnels</h3>
-
-        <div id="div_rewardPro">
-            <label>Récompense fixe </label>
-            <%= classifiedad_form.text_field (:rewardPro), class:"input" %>
-        </div>
-        <div  id="div_rewardProPercent" style="display:none" >
-            <label>Récompense en % du prix du bien</label>
-            <%= classifiedad_form.text_field  :rewardProPercent , class:"input" %>
-        </div>
-      
-        <h3>Je veux bénéfier du réseaux des Helpers Particulier</h3>
-            
-        <div id="div_rewardInd">
-            <label>Récompense fixe </label>
-            <%= classifiedad_form.text_field (:rewardInd), class:"input" %>
-        </div>
-        <div  id="div_rewardIndPercent" style="display:none">
-            <label>Récompense en % du prix du bien</label>
-            <%= classifiedad_form.text_field  :rewardIndPercent, class:"input" %>
-        </div>
+            <label>Je souhaite récompenser le helper de </label>
+            <%= classifiedad_form.fields_for :rewards do |reward_form| %>
+                <%= reward_form.hidden_field :id %>
+                <%= reward_form.hidden_field :amount %>
+                <%= reward_form.text_field  (:percent), class:"input"%> % du prix du bien
+            <% end %>
         <div>
             <label>Courte description</label>
             <%= classifiedad_form.text_field (:short_description), class:"input" %>
@@ -63,8 +46,8 @@
     <% end %>
     <div>
         <%= classifiedad_form.fields_for :propertyphotos , html: { enctype: "multipart/form-data" }  do |f| %>
-            <% render partial:"shared/propertyphoto_fields", locals: {f: f} %>
+            <% render partial:"shared/propertyphoto_fields", locals: {f: f,category: "propertyphoto"} %>
         <% end %>
-        <%= link_to_add_fields2 "Nouvelle photo", classifiedad_form, :propertyphotos, partial:"shared/propertyphoto_fields" %>
+        <%= link_to_add_fields2 "Nouvelle photo", classifiedad_form, :propertyphotos, locals: { category: 'propertyphoto' , newparent: true},  partial:"shared/propertyphoto_fields" %>
     </div>
 <% end %>

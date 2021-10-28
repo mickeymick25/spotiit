@@ -4,7 +4,7 @@ class Propertyad < ApplicationRecord
     enum propertystate: { "Neuf (<5ans)": "recent" , Ancien: "old", Viager: "lifeannuity", "En construciton / VEFA": "offplan", "Non défini": "not_set" }, _suffix: true
     
     belongs_to :classifiedad, dependent: :destroy
-    has_many :adfeatures
+    has_many :adfeatures, dependent: :destroy
 
     accepts_nested_attributes_for :classifiedad, allow_destroy: true 
     accepts_nested_attributes_for :adfeatures, allow_destroy: true  , reject_if: :adfeatures_invalid

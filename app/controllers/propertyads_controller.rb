@@ -2,19 +2,25 @@ class PropertyadsController < ApplicationController
   def index
     puts "###################" + current_user.inspect
     if current_user.nil?
-      @classifiedads = Classifiedad.includes(:localisation, :propertyphotos, propertyad: [adfeatures: [:type]]).left_outer_joins(:propertybuyad).where('propertybuyads.classifiedad_id is null')
+      @classifiedads = Classifiedad.includes(:localisation, :propertyphotos, :rewards, propertybuyad: [adfeatures: [:type]]).left_outer_joins(:propertybuyad).where('propertybuyads.classifiedad_id is null')
+      
+      ids = Classifiedad.left_outer_joins(:propertybuyad).where('propertybuyads.classifiedad_id is null').select(:id).to_a.to_formatted_s(:db)
+      @TotalReward = Reward.joins(:classifiedad).where("classifiedads.id in (#{ids})").sum(:amount)
     else
-      @propertyads = Propertyad.includes(classifiedad: [:localisation, :propertyphotos], adfeatures: [:type]).all   
+      @propertyads = Propertyad.includes(classifiedad: [:localisation, :rewards, :propertyphotos], adfeatures: [:type]).all   
     end
   end
 
   def show
-    @propertyad = Propertyad.includes(classifiedad: [:localisation,:propertyphotos], adfeatures: [:type]).find(params[:id])
+    @propertyad = Propertyad.includes(classifiedad: [:localisation, :rewards,:propertyphotos], adfeatures: [:type]).find(params[:id])
   end
 
   def edit
-    @propertyad = Propertyad.includes(classifiedad: [:localisation,:propertyphotos], adfeatures: [:type]).find(params[:id])
+    @propertyad = Propertyad.includes(classifiedad: [:localisation, :rewards,:propertyphotos], adfeatures: [:type]).find(params[:id])
     
+    if @propertyad.classifiedad.rewards.count == 0
+      @propertyad.classifiedad.rewards.new()
+    end
     set_featureids
   end
 
@@ -22,18 +28,17 @@ class PropertyadsController < ApplicationController
 
     @propertyad = Propertyad.includes(classifiedad: [:localisation,:propertyphotos], adfeatures: [:type]).find(params[:id])
     
-    @propertyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
+    # @propertyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
     
-    @propertyad.classifiedad.valid?    
+    classifiedad = Classifiedad.new(classifiedad_params[:classifiedad_attributes])
+    
+    classifiedad.valid?    
 
-    if @propertyad.classifiedad.errors.count > 0
-      render 'edit' and return
+    if classifiedad.valid?
+      calcul_reward()
     end
     
-    calcul_reward()
-    set_title()
-      
-    self.calcul_reward 
+    self.set_title
     
     if @propertyad.update(all_params)
         puts "update------------------------------ca a marché"
@@ -44,8 +49,7 @@ class PropertyadsController < ApplicationController
         end
 
         redirect_to propertyads_path and return
-    else
-      
+    else      
       set_featureids
       render 'edit' 
     end
@@ -65,7 +69,11 @@ class PropertyadsController < ApplicationController
     
     @propertyad.classifiedad = Classifiedad.new
     
+    puts  @propertyad.classifiedad.inspect
+    puts  @propertyad.inspect
     @propertyad.classifiedad.localisation = Localisation.new
+
+    @propertyad.classifiedad.rewards.new()
 
     init_adfeatures @propertyad
 
@@ -86,13 +94,10 @@ class PropertyadsController < ApplicationController
 
     @propertyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
     
-    @propertyad.classifiedad.valid?    
-
-    if @propertyad.classifiedad.errors.count > 0
-      render 'edit' and return
+    if @propertyad.classifiedad.valid?
+      self.calcul_reward()
     end
     
-    self.calcul_reward()
     self.set_title()
     
     if propertyad.save
@@ -117,14 +122,15 @@ class PropertyadsController < ApplicationController
   end
 
   def classifiedad_params
-    params.require(:propertyad).permit(classifiedad_attributes: [:title,:short_description,:fixedreward, :sector, :rewardPro, :rewardProPercent,:rewardInd, :rewardIndPercent])
+    # params.require(:propertyad).permit(classifiedad_attributes: [:title,:short_description,:fixedreward, :sector, :rewardPro, :rewardProPercent,:rewardInd, :rewardIndPercent])
+    params.require(:propertyad).permit(classifiedad_attributes: [:title,:short_description,:fixedreward, :sector, rewards_attributes:[:percent, :amount]])
   end
 
   def all_params
     params.require(:propertyad).permit(:id,:netprice ,:livingarea,
       :landarea ,:rooms ,:bedrooms ,:floor ,:buildingyear, :cmtyheating, :energydiagnostic, :carbon, :availability, 
       :description, :orientation, :propertytype,:propertystate,
-      classifiedad_attributes: [:id ,:title,:short_description,:fixedreward, :sector, :rewardPro, :rewardProPercent,:rewardInd, :rewardIndPercent, 
+      classifiedad_attributes: [:id ,:title,:short_description,:fixedreward, :sector, rewards_attributes:[:id, :percent, :amount], 
       localisation_attributes: [:id,:number, :street, :district, :city, :dept, :region ], 
       propertyphotos_attributes: [:id,:title, :type_id, :comment, :image]],
     adfeatures_attributes: [:id,:selected, :type_id, :comment, :_destroy])
@@ -159,22 +165,27 @@ class PropertyadsController < ApplicationController
   end
 
   def calcul_reward ()
+
     netprice =  params[:propertyad][:netprice].to_i
-    fixedreward =  params[:propertyad][:classifiedad_attributes][:fixedreward]
-    rewardPro =  params[:propertyad][:classifiedad_attributes][:rewardPro].to_d
-    rewardInd =  params[:propertyad][:classifiedad_attributes][:rewardInd].to_d
-    rewardProPercent =  params[:propertyad][:classifiedad_attributes][:rewardProPercent]
-    rewardIndPercent =  params[:propertyad][:classifiedad_attributes][:rewardIndPercent]
+    rewardPercent = params[:propertyad][:classifiedad_attributes][:rewards_attributes]['0'][:percent].to_d
+ 
+    params[:propertyad][:classifiedad_attributes][:rewards_attributes]['0'][:amount] = ((rewardPercent*netprice/100)/100).ceil * 100
     
-    if fixedreward == "true"
-      params[:propertyad][:classifiedad_attributes][:rewardProPercent] = (rewardPro/netprice*100).round(2)
-      params[:propertyad][:classifiedad_attributes][:rewardIndPercent] = (rewardInd/netprice*100).round(2)
-      puts params[:propertyad][:classifiedad_attributes][:rewardIndPercent].inspect
-    else
-      params[:propertyad][:classifiedad][:rewardPro] = (rewardProPercent/100*netprice).round
-      params[:propertyad][:classifiedad][:rewardInd] = (rewardIndPercent/100*netprice).round
-      puts params[:propertyad][:classifiedad][:rewardInd] .inspect
-    end
+    # fixedreward =  params[:propertyad][:classifiedad_attributes][:fixedreward]
+    # rewardPro =  params[:propertyad][:classifiedad_attributes][:rewardPro].to_d
+    # rewardInd =  params[:propertyad][:classifiedad_attributes][:rewardInd].to_d
+    # rewardProPercent =  params[:propertyad][:classifiedad_attributes][:rewardProPercent]
+    # rewardIndPercent =  params[:propertyad][:classifiedad_attributes][:rewardIndPercent]
+    
+    # if fixedreward == "true"
+    #   params[:propertyad][:classifiedad_attributes][:rewardProPercent] = (rewardPro/netprice*100).round(2)
+    #   params[:propertyad][:classifiedad_attributes][:rewardIndPercent] = (rewardInd/netprice*100).round(2)
+    #   puts params[:propertyad][:classifiedad_attributes][:rewardIndPercent].inspect
+    # else
+    #   params[:propertyad][:classifiedad][:rewardPro] = (rewardProPercent/100*netprice).round
+    #   params[:propertyad][:classifiedad][:rewardInd] = (rewardIndPercent/100*netprice).round
+    #   puts params[:propertyad][:classifiedad][:rewardInd] .inspect
+    # end
 
   end
 

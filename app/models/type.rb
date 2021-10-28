@@ -7,6 +7,8 @@ class Type  < ApplicationRecord
     has_many :sharedfeaturewishes
     has_many :insidefeaturewishes
     has_many :outsidefeaturewishes
+    has_many :propertyphotos
+    has_many :rewards
     
     has_many :propertybuyad, through: :propertyadwishes
     has_many :propertybuyad, through: :propertytypewishes
@@ -15,5 +17,6 @@ class Type  < ApplicationRecord
     has_many :propertybuyad, through: :sharedfeaturewishes
     has_many :propertybuyad, through: :insidefeaturewishes
     has_many :propertybuyad, through: :outsidefeaturewishes
+    has_many :propertybuyad, through: :propertyphotos
 end
 
