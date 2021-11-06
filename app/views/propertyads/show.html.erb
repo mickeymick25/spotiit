@@ -1,5 +1,9 @@
 <div class="relative">
-    <%= render "shared/hero_show" %>
+    <% if user_signed_in? %>
+        <%= render "shared/nav" %>
+    <% else %>
+        <%= render 'shared/hero_show' %>
+    <% end %>
 </div>
 <h1> Annonce Immobilière : <%= @propertyad.id %></h1>
 
