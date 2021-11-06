@@ -7,7 +7,7 @@ class PropertyadsController < ApplicationController
       ids = Classifiedad.left_outer_joins(:propertybuyad).where('propertybuyads.classifiedad_id is null').select(:id).to_a.to_formatted_s(:db)
       @TotalReward = Reward.joins(:classifiedad).where("classifiedads.id in (#{ids})").sum(:amount)
     else
-      @propertyads = Propertyad.includes(classifiedad: [:localisation, :rewards, :propertyphotos], adfeatures: [:type]).all   
+      @propertyads = Propertyad.includes(classifiedad: [:localisation, :rewards, :propertyphotos], adfeatures: [:type]).joins(:classifiedad).where("classifiedads.user_id = #{current_user.id}") 
     end
   end
 

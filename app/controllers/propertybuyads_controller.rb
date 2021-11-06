@@ -9,7 +9,7 @@ class PropertybuyadsController < ApplicationController
       @TotalReward = Reward.joins(:classifiedad).where("classifiedads.id in (#{ids})").sum(:amount)
     else
       @propertybuyads= Propertybuyad.includes(classifiedad: [:localisation, :rewards], propertytypewishes: [:type], propertystatewishes: [:type], 
-        propertydetailwishes: [:type], insidefeaturewishes: [:type], outsidefeaturewishes:[:type], sharedfeaturewishes: [:type] ).all
+        propertydetailwishes: [:type], insidefeaturewishes: [:type], outsidefeaturewishes:[:type], sharedfeaturewishes: [:type] ).joins(:classifiedad).where("classifiedads.user_id = #{current_user.id}")
     end
   end
 
