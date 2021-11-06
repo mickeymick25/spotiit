@@ -1,0 +1,9 @@
+<% if user_signed_in? %>
+	<%= render 'dashboard' %>
+	<% else %>
+  <div class="relative">
+    <%= render "shared/nav" %>
+</div>
+  Veuillez vous logger!!
+
+<% end %>
