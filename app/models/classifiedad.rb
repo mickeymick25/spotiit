@@ -24,6 +24,15 @@ class Classifiedad < ApplicationRecord
         self.adstatus ||= :"Non défini" 
     end
 
+    public
+
+    def is_buy?
+        true if propertybuyad.present? rescue false        
+    end
+
+    def get_type string
+        "Achat" if classified.is_buy? rescue "Vend"        
+    end
     private
 
     def reward_validation2
