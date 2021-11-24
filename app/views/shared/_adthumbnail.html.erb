@@ -1,0 +1,72 @@
+<div class="flex flex-col h-33.5">
+    <div class="bg-white shadow-md rounded-xl p-4 h-full">
+        <div class="flex-none h-full">
+            <!-- Image -->
+            <div class="w-full h-64 overflow-hidden">
+                <% if classifiedad.propertyphotos.empty? %>
+                <img src="https://source.unsplash.com/collection/10566974" alt="Just a flower" class="w-full object-scale-down lg:object-cover rounded-t-xl">
+                <%else%>
+                    <% if classifiedad.propertyphotos.last.image_url %>
+                    <%= image_tag "#{classifiedad.propertyphotos.last.image_url}" , class:"w-full h-64 object-scale-down lg:object-cover rounded-t-xl" %>
+                    <% end %>
+                <%end %>
+            </div>
+            <!-- text -->
+            <div class="flex flex-nowrap w-full mt-2">
+                <div class="w-full justify-start inline-flex space-x-4 " >
+                    <div class="text-lg text-blue-700 font-medium pt-1" >
+                        Récompense: 
+                    </div>
+                </div>
+                <div class="flex flex-row justify-end text-blue-700 font-medium">
+                    <div class="flex flex-align-items-end mr-1 " >
+                        <div class="text-xs text-blue-700 font-medium pt-3" style="height:30px">
+                            (jusqu'à)
+                        </div>
+                    </div>
+                    <div class=" text-2xl " style="white-space:nowrap;">
+                        <h1><%= number_to_currency(classifiedad.rewards[0].amount.to_i, locale: :fr, precision: 0) %></h1>
+                    </div>
+                </div>
+            </div>
+            <div class="py-1 h-32">
+                <div class="mt-1 text-lg text-wrap font-medium ">
+                    <%= get_property_title(classifiedad) %>
+                </div>
+                <div class="text-lg font-small">
+                    <%if classifiedad.propertyad.present?%>
+                        <%= number_to_currency( classifiedad.propertyad.netprice, locale: :fr, precision: 0) %>,
+                    <% else %>
+                        <%= number_to_currency( classifiedad.propertybuyad.budget, locale: :fr, precision: 0) %>,
+                    <% end %>
+                    <%= classifiedad.title%>
+                </div>
+                <div class="flex flex-nowrap w-full">
+                    <div class="w-full justify-start inline-flex space-x-4 ">
+                    <div class="text-s text-blue-700 font-medium">
+                    <% if classifiedad.localisation.present? %>
+                        <%= classifiedad.localisation.city %>, <%= classifiedad.localisation.district %>
+                    <%end%>
+                    </div>
+                    </div>
+                    <div class="justify-end text-xs text-blue-700 font-medium">
+                        <%= classifiedad.publicationdate %>
+                    </div>
+                </div>
+            </div>
+            <!-- divider -->
+            <div class="flex p-4 pb-2 border-t border-gray-200 "></div>
+            <div class="flex space-x-3 text-sm font-medium">
+                <%if classifiedad.propertyad.present?%>
+                    <a href="<%= propertyad_path(classifiedad.propertyad.id) %>" class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                        Je connais quelqu'un
+                    </a>
+                <%else%>
+                    <a href="<%= propertybuyad_path(classifiedad.propertybuyad.id) %>" class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
+                        Je connais quelqu'un
+                    </a>
+                <%end%>
+            </div>
+        </div>
+    </div>
+</div>

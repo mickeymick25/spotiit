@@ -1,6 +1,6 @@
-class CreateAnnouncerwishes < ActiveRecord::Migration[6.1]
+class CreatePropertyadwishes < ActiveRecord::Migration[6.1]
   def change
-    create_table :announcerwishes do |t|
+    create_table :propertyadwishes do |t|
       t.integer :wishlevel
       t.string :comment
 

@@ -1,0 +1,14 @@
+<%= render "shared/nav" %>
+
+<h1>Petites annonces Spotiit</h1>
+
+<% if @propertybuyad.present? %>
+
+    
+<%= render partial:'inputform' , locals: {propertybuyad:@propertybuyad} %>
+        
+<% end %>
+
+<p>
+    <%= link_to "Annuler", :back %>
+</p>

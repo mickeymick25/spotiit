@@ -13,6 +13,8 @@ module App
     
     config.active_record.schema_format = :sql
 
+    config.autoload_paths << "#{Rails.root}/app/uploaders"
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

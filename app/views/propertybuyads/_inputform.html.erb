@@ -1,0 +1,103 @@
+<%= form_for @propertybuyad do |form| %>
+    <%= display_errors_for(form.object) %>
+    
+    <!-- #some fields for the @person object like:-->
+    <%= render partial:'shared/inputclassified' , locals: {classifiedad: @propertybuyad.classifiedad, f: form} %>
+    <%= form.hidden_field :id %>
+    <div>
+        <div>
+            <label>Budget</label>
+            <%= form.text_field (:budget), class:"input" %>
+        </div>
+        <div>
+            <label>Apport</label>
+            <%= form.text_field (:supply), class:"input" %> 
+        </div>        
+        <div>
+            <label>Description</label>
+            <%= form.text_field (:description), class:"input" %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Quel type de bien cherchez vous?
+        </div>
+        <div>
+            <%= form.fields_for :propertytypewishes do |typebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertytypes' , f: typebuilder, newparent: form.object.persisted? , wishtypeName: typebuilder.object.type.typeName }  %>
+            <% end %> 
+            <% if !form.object.id.nil? %>
+                <%= link_to_add_fields2  "Nouveau souhait", form, :propertytypewishes, locals: { category: 'propertytypes' , newparent: true} , partial:'inputwish_fields' %>
+            <% end %>
+        </div>
+    <div>
+    <div>
+        <div>
+            Cherchez un bien récent ?
+        </div>
+        <div>
+            <%= form.fields_for :propertystatewishes do |statebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertystates' , f: statebuilder, newparent: form.object.persisted? }  %>
+            <% end %> 
+            <% if !form.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :propertystatewishes, locals: { category: 'propertystates' , newparent: true}, partial:'inputwish_fields' %>
+            <% end %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Mais plus en détails ?
+        </div>
+        <div>
+            <%= form.fields_for :propertydetailwishes do |detailsbuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'propertydetails' , f: detailsbuilder, newparent: form.object.persisted? }  %>
+            <% end %> 
+            <% if !form.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouveau souhait", form , :propertydetailwishes, locals: { category: 'propertydetails' , newparent: true}, partial:'inputwish_fields' %>
+            <% end %>
+        </div>
+    </div>
+    <div>
+        <div>
+            passons à l'intérieur?
+        </div>
+        <div>
+            <%= form.fields_for :insidefeaturewishes do |insidebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'insidefeatures' , f: insidebuilder, newparent: form.object.persisted?}  %>
+            <% end %> 
+            <% if !form.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :insidefeaturewishes, locals: { category: 'insidefeatures', newparent: true} , partial:'inputwish_fields' %>
+            <% end %>
+        </div>
+    </div>
+        <div>
+            et à l'exterieur? 
+        </div>
+        <div>
+            <%= form.fields_for :outsidefeaturewishes do |outsidebuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'outsidefeatures' , f: outsidebuilder, newparent: form.object.persisted? }  %>
+            <% end %> 
+            <% if !form.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :outsidefeaturewishes, locals: { category: 'outsidefeatures', newparent: true}  , partial:'inputwish_fields' %>
+            <% end %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Avez vous des préférences pour les parties communes?
+        </div>
+        <div>
+            <%= form.fields_for :sharedfeaturewishes do |sharedbuilder| %>
+                <%= render partial: "inputwish_fields", locals: { category: 'sharedfeatures' , f: sharedbuilder, newparent: form.object.persisted? }  %>
+            <% end %> 
+            <% if !form.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouveau souhait", form, :sharedfeaturewishes, locals: { category: 'sharedfeatures', newparent: true}, partial:'inputwish_fields' %>
+            <% end %>
+        </div>
+    </div>
+    
+    
+    <div>
+        <button type="submit" class="btn btn-default"> Valider </button>
+    </div>
+<% end %>

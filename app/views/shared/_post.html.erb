@@ -3,7 +3,7 @@
   <div class="bg-white shadow-md rounded-xl p-4">
     <div class="flex-none">
       <!-- Image -->
-      <div class="w-full max-h-48 overflow-hidden">
+      <div class="w-full max-h-64 overflow-hidden">
           <img src="https://source.unsplash.com/collection/10566974" alt="Just a flower" class="w-full object-scale-down lg:object-cover rounded-t-xl">
       </div>
       <!-- text -->
@@ -48,152 +48,12 @@ PAS DE DEMARCHAGE TELEPHONIQUE</p>
   </div>
 </div>
 
-<!-- Item spotiit #2 -->
-<div class="flex flex-col">
-  <div class="bg-white shadow-md rounded-xl p-4">
-    <div class="flex-none">
-      <!-- Image -->
-      <div class="w-full max-h-48 overflow-hidden">
-          <img src="https://source.unsplash.com/collection/3589678" alt="Just a flower" class="w-full object-scale-down lg:object-cover rounded-t-xl">
-      </div>
-      <!-- text -->
-      <div class="py-2">
-        <div class="flex flex-nowrap w-full">
-          <div class="w-full justify-start inline-flex space-x-4 ">
-            <div class="text-xs text-blue-700 font-medium">
-                Vente
-            </div>
-            <div class="text-xs text-blue-700 font-medium">
-                Paris 9, Cadet
-            </div>
-          </div>
-          <div class="justify-end text-xs text-blue-700 font-medium">
-              Aujourd'hui, 18h44
-          </div>
-        </div>
 
-        <h2 class="text-lg font-medium">Appartement 5 pièces au coeur du 9e</h2>
-        <p class="mt-4 max-h-12 overflow-ellipsis overflow-hidden">Duplex sous les toits de 93m2 loi Carrez 123m2 habitable, avec poutres apparentes et mezzanine en plein coeur du 9e (quartier cadet). Cet appartement doté d'un certain charme est très lumineux et offre de beaux volumes:
-- 4 chambres
-- 2 salles de bain (dont une avec WC séparés)
-- cuisine équipée
-- balcon avec vue sur les toits
-- coin bureau
-- mezzanine
-- cave
-- 5e étage avec ascenseur
-N'hésitez pas à me contacter par mail pour un point téléphonique avant visite!
-PAS DE DEMARCHAGE TELEPHONIQUE</p>
+<% if @classifiedads.present? %>
+  <% @classifiedads.each do |classifiedad| %>
+    <%= render partial: "shared/adthumbnail", locals: { classifiedad: classifiedad }  %>
+  <%end%>
+<% end %>
+<!-- Item spotiit #1 -->
 
-      </div>
-      <!-- divider -->
-      <div class="flex p-4 pb-2 border-t border-gray-200 "></div>
-      <div class="flex space-x-3 text-sm font-medium">
-        <a href="#" class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-          2,5% du prix de vente
-        </a>
-      </div>
 
-    </div>
-  </div>
-</div>
-
-<!-- Item spotiit #3 -->
-<div class="flex flex-col">
-  <div class="bg-white shadow-md rounded-xl p-4">
-    <div class="flex-none">
-      <!-- Image -->
-      <div class="w-full max-h-48 overflow-hidden">
-          <img src="https://source.unsplash.com/collection/644649" alt="Just a flower" class="w-full object-scale-down lg:object-cover rounded-t-xl">
-      </div>
-      <!-- text -->
-      <div class="py-2">
-        <div class="flex flex-nowrap w-full">
-          <div class="w-full justify-start inline-flex space-x-4 ">
-            <div class="text-xs text-blue-700 font-medium">
-                Vente
-            </div>
-            <div class="text-xs text-blue-700 font-medium">
-                Paris 9, Cadet
-            </div>
-          </div>
-          <div class="justify-end text-xs text-blue-700 font-medium">
-              Aujourd'hui, 18h44
-          </div>
-        </div>
-
-        <h2 class="text-lg font-medium">Appartement 5 pièces au coeur du 9e</h2>
-        <p class="mt-4 max-h-12 overflow-ellipsis overflow-hidden">Duplex sous les toits de 93m2 loi Carrez 123m2 habitable, avec poutres apparentes et mezzanine en plein coeur du 9e (quartier cadet). Cet appartement doté d'un certain charme est très lumineux et offre de beaux volumes:
-- 4 chambres
-- 2 salles de bain (dont une avec WC séparés)
-- cuisine équipée
-- balcon avec vue sur les toits
-- coin bureau
-- mezzanine
-- cave
-- 5e étage avec ascenseur
-N'hésitez pas à me contacter par mail pour un point téléphonique avant visite!
-PAS DE DEMARCHAGE TELEPHONIQUE</p>
-
-      </div>
-      <!-- divider -->
-      <div class="flex p-4 pb-2 border-t border-gray-200 "></div>
-      <div class="flex space-x-3 text-sm font-medium">
-        <a href="#" class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-          5% du prix de vente
-        </a>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- Item spotiit #4 -->
-<div class="flex flex-col">
-  <div class="bg-white shadow-md rounded-xl p-4">
-    <div class="flex-none">
-      <!-- Image -->
-      <div class="w-full max-h-48 overflow-hidden">
-          <img src="https://source.unsplash.com/collection/3715652" alt="Just a flower" class="w-full object-scale-down lg:object-cover rounded-t-xl">
-      </div>
-      <!-- text -->
-      <div class="py-2">
-        <div class="flex flex-nowrap w-full">
-          <div class="w-full justify-start inline-flex space-x-4 ">
-            <div class="text-xs text-blue-700 font-medium">
-                Vente
-            </div>
-            <div class="text-xs text-blue-700 font-medium">
-                Paris 9, Cadet
-            </div>
-          </div>
-          <div class="justify-end text-xs text-blue-700 font-medium">
-              Aujourd'hui, 18h44
-          </div>
-        </div>
-
-        <h2 class="text-lg font-medium">Appartement 5 pièces au coeur du 9e</h2>
-        <p class="mt-4 max-h-12 overflow-ellipsis overflow-hidden">Duplex sous les toits de 93m2 loi Carrez 123m2 habitable, avec poutres apparentes et mezzanine en plein coeur du 9e (quartier cadet). Cet appartement doté d'un certain charme est très lumineux et offre de beaux volumes:
-- 4 chambres
-- 2 salles de bain (dont une avec WC séparés)
-- cuisine équipée
-- balcon avec vue sur les toits
-- coin bureau
-- mezzanine
-- cave
-- 5e étage avec ascenseur
-N'hésitez pas à me contacter par mail pour un point téléphonique avant visite!
-PAS DE DEMARCHAGE TELEPHONIQUE</p>
-
-      </div>
-      <!-- divider -->
-      <div class="flex p-4 pb-2 border-t border-gray-200 "></div>
-      <div class="flex space-x-3 text-sm font-medium">
-        <a href="#" class="w-full flex items-center justify-center px-4 py-2 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10">
-          6% du prix de vente
-        </a>
-      </div>
-
-    </div>
-  </div>
-</div>

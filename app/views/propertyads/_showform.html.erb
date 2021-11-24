@@ -1,0 +1,72 @@
+
+<% Rails.application.routes.recognize_path(request.referrer).inspect %>
+<div style="border:1px solid">
+    <%= render partial:'shared/showclassified', locals: {ad:propertyad} %>
+    <div>
+        <p>Détails du bien</p>        
+        <p>
+            <label>Type de bien: </label> 
+            <%= propertyad.propertytype %>
+        </p>
+        <p>
+            <label>Nature du bien: </label> 
+            <%= propertyad.propertystate %>
+        </p>
+        <p>
+            <label>Prix de vente Net vendeur: </label> 
+            <%= propertyad.netprice %>
+        </p>
+        <p>
+            <label>Date de disponibilité: </label> 
+            <%= propertyad.availability %>
+        </p>
+        <p>
+            <label>Surface habitable: </label> 
+            <%= propertyad.livingarea %>
+        </p>
+        <p>
+            <label>Surface du terrain: </label> 
+            <%= propertyad.landarea %>
+        </p>
+    </div>
+    <div>
+        <p>A l'intérieure</p>
+        <p>
+            <label>Nombre de pièces: </label> 
+            <%= propertyad.rooms %>
+        </p>
+        <p>
+            <label>Nombre de chambres: </label> 
+            <%= propertyad.bedrooms %>
+        </p>
+    </div>
+    <div>
+        <p>Informations générales</p>
+        <p>
+            <label>Description: </label> 
+            <%= propertyad.description %>
+        </p>
+        <p>
+            <label>Année de Construction: </label> 
+            <%= propertyad.buildingyear %>
+        </p>
+        <p>
+            <label>Diagnostique de performance énergétique: </label> 
+            <%= propertyad.energydiagnostic %>
+        </p>
+        <p>
+            <label>Diagnostique d'émission de gaz à effet de serre: </label> 
+            <%= propertyad.carbon %>
+        </p>
+    </div>
+    <div>
+        <% if propertyad.adfeatures.present? %>
+            <% propertyad.adfeatures.each do |adfeature| %>
+                <p>
+                    <label><%= adfeature.type.typeName %></label>
+                    <%= adfeature.comment %>
+                </p>
+            <% end%>    
+        <% end %>
+    </div>
+</div>

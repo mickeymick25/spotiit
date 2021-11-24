@@ -1,0 +1,105 @@
+
+<div class="relative">
+    <%= render "shared/nav" %>
+</div>
+
+<header class="bg-white shadow">
+  <div class="max-w-full mx-auto py-6 px-4 sm:px-6 lg:px-8">
+    <h1 class="text-xl font-bold text-gray-300">
+      Dashboard Annonceur
+    </h1>
+  </div>
+</header>
+
+<main>
+  <div class="max-w-full mx-auto py-6 sm:px-6 lg:px-8">
+    <!-- Replace with your content -->
+    <div class="px-4 py-6 sm:px-0">
+      <div class="flex">
+        <div class="flex-auto border-2 border-dashed border-gray-200 rounded-lg">
+          <div>
+            <%= link_to "créer une nouvelle annonce d'achat ", new_propertybuyad_path , class:"btn btn-default mr-5" %>
+            <%= link_to "créer une nouvelle annonce de vente", new_propertyad_path , class:"btn btn-default" %>
+          </div>
+          <div class ="table w-full">
+            <div class="table-row-group">
+              <div class="table-row">
+                <div class="table-cell">Photo</div>
+                <div class="table-cell">Secteur</div>
+                <div class="table-cell">Type d'annonce</div>
+                <div class="table-cell">Titre</div>
+                <div class="table-cell">Prix/Budget</div>
+                <div class="table-cell">Récompense</div>
+                <div class="table-cell">Candidats</div>
+                <div class="table-cell">Statut</div>
+                <div class="table-cell">Action</div>
+              </div>
+              <% if @classifiedads.present? %>
+                  <% @classifiedads.each do |classifiedad| %>
+                    <% if classifiedad.is_buy? %>
+                      <div class="table-row">
+                        <div class="table-cell">
+                          <% if classifiedad.propertyphotos.empty? %>
+                              <img src="https://source.unsplash.com/collection/10566974" alt="Just a flower" class="w-32 h-32 object-scale-down lg:object-cover">
+                            <%else%>
+                                <% if classifiedad.propertyphotos.last.image_url %>
+                                  <%= image_tag "#{classifiedad.propertyphotos.last.image_url}" , class:"w-32 h-32 object-scale-down lg:object-cover" %>
+                                <% end %>
+                            <%end %> 
+                        </div>
+                        <div class="table-cell"><%= classifiedad.sector %></div>
+                        <div class="table-cell">Achat</div>
+                        <div class="table-cell"><%= classifiedad.title %></div>
+                        <div class="table-cell"><%= number_to_currency(classifiedad.propertybuyad.budget, locale: :fr, precision: 0) %></div>
+                        <div class="table-cell"><%= number_to_percentage(classifiedad.rewards[0].percent, precision: 0) %></div>
+                        <div class="table-cell">0</div>
+                        <div class="table-cell"><%= classifiedad.adstatus %></div>
+                        <div class="table-cell">
+                           <%= link_to "Détails", propertybuyad_path(classifiedad.propertybuyad.id) %>
+                           <%= link_to "Aperçu", issuerdashboard_path(classifiedad.id), remote: true %>
+                        </div>
+                      </div>
+                    <% else %>
+                      <div class="table-row">
+                        <div class="table-cell">
+                          <% if classifiedad.propertyphotos.empty? %>
+                              <img src="https://source.unsplash.com/collection/10566974" alt="Just a flower" class="w-32 h-32 object-scale-down lg:object-cover">
+                            <%else%>
+                                <% if classifiedad.propertyphotos.last.image_url %>
+                                  <%= image_tag "#{classifiedad.propertyphotos.last.image_url}" , class:"w-32 h-32 object-scale-down lg:object-cover" %>
+                                <% end %>
+                            <%end %> 
+                        </div>
+                        <div class="table-cell"><%= classifiedad.sector %></div>
+                        <div class="table-cell">Vend</div>
+                        <div class="table-cell"><%= classifiedad.title %></div>
+                        <div class="table-cell"><%= number_to_currency(classifiedad.propertyad.netprice, locale: :fr, precision: 0) %></div>
+                        <div class="table-cell"><%= number_to_percentage(classifiedad.rewards[0].percent, precision: 0) %></div>
+                        <div class="table-cell">0</div>
+                        <div class="table-cell"><%= classifiedad.adstatus %></div>
+                        <div class="table-cell">
+                           <%= link_to "Détails", propertyad_path(classifiedad.propertyad.id) %>
+                           <%= link_to "Aperçu", issuerdashboard_path(classifiedad.id), remote: true %>
+                        </div>
+                      </div>
+                    <% end %>
+                  <%end%>
+              <% end %>
+            </div>
+          </div>
+          <div>
+            <%= link_to "< précédent", issuerdashboard_index_path(page: @page-1) %>
+            <%= link_to "Suivant >", issuerdashboard_index_path(page: @page+1) %>
+          </div>
+        </div>
+        <div id="ad_thumbnail" class="flex-initial border-2 border-dashed border-gray-200 rounded-lg w-96 ml-8" >
+          <% if @classifiedads.present? %>
+            <%= render partial: "shared/adthumbnail", locals: { classifiedad: @classifiedads.first }  %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+    <!-- /End replace -->
+  </div>
+</main>

@@ -1,0 +1,103 @@
+<%= form_for @propertyad do |f| %>
+    <%= display_errors_for(f.object) %>
+    
+    <!-- #some fields for the @person object like:-->
+    <%= render partial:'shared/inputclassified' , locals: {classifiedad: @propertyad.classifiedad, f: f} %>
+    <%= f.hidden_field :id %>
+    
+    <div>
+        <h2>Mais plus en détails</h2>
+
+        <div>
+            <label>Type de bien</label>
+            <%= f.select(:propertytype, Propertyad.propertytypes {|properptytype| [propertytype.key,propertytype.key]}) %>
+        </div>
+        <div>
+            <label>Nature du bien</label>
+            <%= f.select(:propertystate, Propertyad.propertystates {|propertystate| [propertystate.key,propertystate.key]}) %>
+        </div>
+        <div>
+            <label>Prix de vente (Net vendeur)</label>
+            <%= f.text_field (:netprice), class:"input" %>
+        </div>
+        <div>
+            <label>Date de disponibilité</label>
+            <%= f.date_field (:availability)  %>
+        </div>
+        <div>
+            <label>Surface habitable (m2)</label>
+            <%= f.text_field (:livingarea), class:"input" %>
+        </div>
+        <div>
+            <label>Surface du terrain (m2)</label>
+            <%= f.text_field (:landarea), class:"input" %>
+        </div>
+        <div>
+            <label>Nombre de pièces</label>
+            <%= f.select :rooms, [1,2,3,4,5,6,7,">7"] %>
+        </div>
+        <div>
+            <label>Nombre de chambres</label>
+            <%= f.select :bedrooms, [1,2,3,4,5,">5"] %>
+        </div>
+        <div>
+            <label>Année de Construction</label>
+            <%= f.text_field (:buildingyear), class:"input" %>
+        </div>
+        <div>
+            <label>Diagnostique de performance énergétique</label>
+            <%= f.select :energydiagnostic, ["A","B","C","D","E","F"] %>
+        </div>
+        <div>
+            <label>Indice d'émission de gaz à effet de serre</label>
+            <%= f.select :carbon, ["A","B","C","D","E","F"] %>
+        </div>
+        <div>
+            <label>Description du bien (longue)</label>
+            <%= f.text_area (:description), class:"input" %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Caracteristique de votre bien:
+        </div>
+        <div>Commodités intérieures</div>
+        <div>
+            <%= f.fields_for :adfeatures,  @propertyad.adfeatures.find_all{ |a| @insideids.include?(a.type_id)}  do |adfeature_form| %>
+                <%= render partial: "inputfeatures_fields", locals: { f: adfeature_form, newparent: adfeature_form.object.persisted? , category: 'insidefeatures' }  %>
+            <% end %>
+            <% if !f.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouvelle commaudité", f, :adfeatures, locals: { category: 'insidefeatures', newparent: true}, partial:'inputfeatures_fields' %>
+            <% end %>
+        </div>
+    </div>
+    <div>
+        <div>
+            Commodités exterieures.
+        </div>
+        <div>
+            <%= f.fields_for :adfeatures,  @propertyad.adfeatures.find_all{ |a| @outsideids.include?(a.type_id)}  do |adfeature_form| %>
+                <%= render partial: "inputfeatures_fields", locals: { f: adfeature_form, newparent: adfeature_form.object.persisted? , category: 'outsidefeatures' }  %>
+            <% end %>
+            <% if !f.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouvelle commaudité", f, :adfeatures, locals: { category: 'outsidefeatures', newparent: true}, partial:'inputfeatures_fields' %>
+            <% end %>
+        </div>
+    </div>
+    <div>
+        <div>
+           Commodités communes.
+        </div>
+        <div>
+            <%= f.fields_for :adfeatures,  @propertyad.adfeatures.find_all{ |a| @sharedids.include?(a.type_id)}  do |adfeature_form| %>
+                <%= render partial: "inputfeatures_fields", locals: { f: adfeature_form, newparent: adfeature_form.object.persisted? , category: 'sharedfeatures' }  %>
+            <% end %>
+            <% if !f.object.id.nil? %>
+                <%= link_to_add_fields2   "Nouvelle commaudité", f, :adfeatures, locals: { category: 'sharedfeatures', newparent: true}, partial:'inputfeatures_fields' %>
+            <% end %>
+        </div>
+    </div>
+<div>
+    <button type="submit" class="btn btn-default"> Valider </button>
+</div>
+<% end %>

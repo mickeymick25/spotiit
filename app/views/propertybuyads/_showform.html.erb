@@ -1,0 +1,33 @@
+<div style="border:1px solid">
+    
+    <%= render partial:'shared/showclassified', locals: {ad:propertybuyad} %>
+
+    <div>
+        <p>Localisation du Bien</p>
+        <p>
+            Budget: 
+            <%= propertybuyad.budget %>
+        </p>
+        <p>
+            Apport: 
+            <%= propertybuyad.supply %>
+        </p>
+        <p>
+            Financement: 
+            <%= propertybuyad.financing %>
+        </p>
+        <p>
+            Description: 
+            <%= propertybuyad.description %>
+        </p>        
+    </div>
+    <div>
+        <%= render partial:'showwishes', locals: {wishes:propertybuyad.propertytypewishes , wishescat: 'Type de bien recherché' } %>
+        <%= render partial:'showwishes', locals: {wishes:propertybuyad.propertystatewishes , wishescat: 'Nature du bien recherché' } %>
+        <%= render partial:'showwishes', locals: {wishes:propertybuyad.propertydetailwishes , wishescat: 'Détails de bien recherché' } %>
+        <%= render partial:'showwishes', locals: {wishes:propertybuyad.insidefeaturewishes , wishescat: "Caractéristiques de l'intérieur recherchéeé" } %>
+        <%= render partial:'showwishes', locals: {wishes:propertybuyad.outsidefeaturewishes , wishescat: 'Caractéristiques exterieur recherchées' } %>
+        <%= render partial:'showwishes', locals: {wishes:propertybuyad.sharedfeaturewishes , wishescat: 'Caractéristiques recherchées des parties communes ' } %>
+    </div>
+    
+</div>
