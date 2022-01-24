@@ -43,9 +43,9 @@ class PropertybuyadsController < ApplicationController
 
     propertybuyad = Propertybuyad.new(propertybuyad_params)
     
-    if propertybuyad.valid?
+    # if propertybuyad.valid?
       self.set_title
-    end
+    # end
 
     if @propertybuyad.update(all_params)
         puts "update------------------------------ca a marché"    
@@ -78,7 +78,7 @@ class PropertybuyadsController < ApplicationController
     
     # @classifiedad= @propertybuyad.classifiedad
     @propertybuyad.classifiedad.localisation = Localisation.new
-    @propertybuyad.classifiedad.propertyphotos.new()
+    # @propertybuyad.classifiedad.propertyphotos.new()
 
     @propertybuyad.classifiedad.rewards.new()
 
@@ -93,12 +93,13 @@ class PropertybuyadsController < ApplicationController
     
     propertybuyad.classifiedad.sector = "Immobilier"
     propertybuyad.classifiedad.adstatus = "to_validate"
+    propertybuyad.classifiedad.user_id = current_user.id
     
     if propertybuyad.classifiedad.valid? 
-      self.calcul_reward 
+      propertybuyad.classifiedad.rewards[0].amount = self.calcul_reward 
     end
 
-    self.set_title
+    propertybuyad.classifiedad.title = self.set_title
    
     if propertybuyad.save
         puts "save------------------------------ca a marché"
@@ -141,18 +142,19 @@ class PropertybuyadsController < ApplicationController
 
     types = Type.select(:typekey, :id).where(catetory: 'propertydetails').to_a
 
-    # rooms = propertydetails.select{|i,v| v[:type_id] == types.find{ |i| i.typekey == 'rooms'}.id}
+    
     rooms = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'rooms'}.id.to_s}[0][:comment].to_i
     bedrooms = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'bedrooms'}.id.to_s}[0][:comment].to_i
     livingarea = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'livingarea'}.id.to_s}[0][:comment].to_i
-    # landarea = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'landarea'}.id.to_s}[0][:comment].to_i
-
+   
     title = "#{rooms} pièces"
     title = "#{title}, #{bedrooms} chambres" 
     title = "#{title}, #{livingarea.round(0)}m2" 
-    # title = "#{title}, terrain #{landarea}m2"  
 
     params[:propertybuyad][:classifiedad_attributes][:title] = title
+    puts "title = " + title
+
+    return title
   end
 
   def calcul_reward ()
@@ -160,7 +162,8 @@ class PropertybuyadsController < ApplicationController
     budget =  params[:propertybuyad][:budget].to_i
     rewardPercent = params[:propertybuyad][:classifiedad_attributes][:rewards_attributes]['0'][:percent].to_d
  
-    params[:propertybuyad][:classifiedad_attributes][:rewards_attributes]['0'][:amount] = ((rewardPercent*budget/100)/100).ceil * 100
+    rewardAmount = ((rewardPercent*budget/100)/100).ceil * 100
+    params[:propertybuyad][:classifiedad_attributes][:rewards_attributes]['0'][:amount] = rewardAmount
     # fixedreward =  params[:propertybuyad][:classifiedad_attributes][:fixedreward]
     # rewardPro =  params[:propertybuyad][:classifiedad_attributes][:rewardPro].to_d
     # rewardInd =  params[:propertybuyad][:classifiedad_attributes][:rewardInd].to_d
@@ -177,6 +180,7 @@ class PropertybuyadsController < ApplicationController
     #   puts params[:propertybuyad][:classifiedad][:rewardInd] .inspect
     # end
 
+    return rewardAmount
   end
 
   def classifiedad_params

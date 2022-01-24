@@ -26,6 +26,8 @@ class PropertyadsController < ApplicationController
 
   def update
 
+    puts "update Propertyad ###################################"
+
     @propertyad = Propertyad.includes(classifiedad: [:localisation,:propertyphotos], adfeatures: [:type]).find(params[:id])
     
     # @propertyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
@@ -90,15 +92,16 @@ class PropertyadsController < ApplicationController
 
     propertyad.classifiedad.sector = "Immobilier"
     propertyad.classifiedad.adstatus = "to_validate"
-    propertyad.classifiedad.title = 
-
-    @propertyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
+    propertyad.classifiedad.title = ""
+    propertyad.classifiedad.user_id = current_user.id
     
-    if @propertyad.classifiedad.valid?
-      self.calcul_reward()
+    #propertyad.classifiedad.assign_attributes(classifiedad_params[:classifiedad_attributes] )
+    
+    if propertyad.classifiedad.valid?
+      propertyad.classifiedad.rewards[0].amount = self.calcul_reward()
     end
     
-    self.set_title()
+    propertyad.classifiedad.title = self.set_title()
     
     if propertyad.save
         puts "save------------------------------ca a marché"
@@ -123,7 +126,7 @@ class PropertyadsController < ApplicationController
 
   def classifiedad_params
     # params.require(:propertyad).permit(classifiedad_attributes: [:title,:short_description,:fixedreward, :sector, :rewardPro, :rewardProPercent,:rewardInd, :rewardIndPercent])
-    params.require(:propertyad).permit(classifiedad_attributes: [:title,:short_description,:fixedreward, :sector, rewards_attributes:[:percent, :amount]])
+    params.require(:propertyad).permit(classifiedad_attributes: [:id,:title,:short_description,:fixedreward, :sector, rewards_attributes:[:percent, :amount]])
   end
 
   def all_params
@@ -150,6 +153,8 @@ class PropertyadsController < ApplicationController
 
 
   def set_title ()
+
+    puts "set_title #################"
     propertytype =   params[:propertyad][:propertytype]
     rooms =   params[:propertyad][:rooms]
     bedrooms =   params[:propertyad][:bedrooms]
@@ -162,14 +167,20 @@ class PropertyadsController < ApplicationController
     title = "#{title}, terrain #{landarea}m2" if !landarea.empty? 
 
     params[:propertyad][:classifiedad_attributes][:title] = title
+    
+    puts "title = " + title
+
+    return title
   end
 
   def calcul_reward ()
 
+    puts "calcul_reward #################"
     netprice =  params[:propertyad][:netprice].to_i
     rewardPercent = params[:propertyad][:classifiedad_attributes][:rewards_attributes]['0'][:percent].to_d
- 
-    params[:propertyad][:classifiedad_attributes][:rewards_attributes]['0'][:amount] = ((rewardPercent*netprice/100)/100).ceil * 100
+    
+    rewardAmount = ((rewardPercent*netprice/100)/100).ceil * 100
+    params[:propertyad][:classifiedad_attributes][:rewards_attributes]['0'][:amount] = rewardAmount
     
     # fixedreward =  params[:propertyad][:classifiedad_attributes][:fixedreward]
     # rewardPro =  params[:propertyad][:classifiedad_attributes][:rewardPro].to_d
@@ -186,7 +197,8 @@ class PropertyadsController < ApplicationController
     #   params[:propertyad][:classifiedad][:rewardInd] = (rewardIndPercent/100*netprice).round
     #   puts params[:propertyad][:classifiedad][:rewardInd] .inspect
     # end
-
+    
+    return rewardAmount
   end
 
 end
