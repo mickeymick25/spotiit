@@ -2,7 +2,7 @@
     <% if user_signed_in? %>
         <%= render "shared/nav" %>
     <% else %>
-        <%= render 'shared/hero_show' %>
+        <%= render partial:'shared/hero_show', locals: { classifiedad: @propertyad.classifiedad } %>
     <% end %>
 </div>
 <h1> Annonce Immobilière : <%= @propertyad.id %></h1>

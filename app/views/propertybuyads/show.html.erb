@@ -2,12 +2,9 @@
     <% if user_signed_in? %>
         <%= render "shared/nav" %>
     <% else %>
-        <%= render 'shared/hero_show' %>
+        <%= render partial:'shared/hero_show', locals: { classifiedad: @propertybuyad.classifiedad } %>
     <% end %>
 </div>
-
-<h1>Petites annonces Spotiit</h1> 
-
 <%= render partial:'showform', locals: {propertybuyad:@propertybuyad} %>
 
 <p> 
