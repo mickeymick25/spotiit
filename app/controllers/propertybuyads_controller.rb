@@ -1,5 +1,7 @@
 class PropertybuyadsController < ApplicationController
 
+  helper_method :get_propertydetail
+
   def index
     if current_user.nil?
       @classifiedads = Classifiedad.includes(:localisation, :rewards, propertyphotos: [:type],propertyad: [propertytypewishes: [:type], propertystatewishes: [:type], 
@@ -48,8 +50,7 @@ class PropertybuyadsController < ApplicationController
     # end
 
     if @propertybuyad.update(all_params)
-        puts "update------------------------------ca a marché"    
-
+        puts "update------------------------------ca a marché"
         redirect_to propertybuyads_path and return
     else
       render 'edit' 
@@ -141,11 +142,14 @@ class PropertybuyadsController < ApplicationController
     puts propertydetails.inspect
 
     types = Type.select(:typekey, :id).where(catetory: 'propertydetails').to_a
-
     
     rooms = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'rooms'}.id.to_s}[0][:comment].to_i
     bedrooms = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'bedrooms'}.id.to_s}[0][:comment].to_i
     livingarea = propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'livingarea'}.id.to_s}[0][:comment].to_i
+    
+    # rooms = get_propertydetail('rooms')
+    # bedrooms = get_propertydetail('bedrooms')
+    # livingarea = get_propertydetail('livingarea')
    
     title = "#{rooms} pièces"
     title = "#{title}, #{bedrooms} chambres" 
@@ -155,6 +159,13 @@ class PropertybuyadsController < ApplicationController
     puts "title = " + title
 
     return title
+  end
+
+  def get_propertydetail (propertybuyad)
+    types = Type.select(:typekey, :id).where(catetory: 'propertydetails').to_a
+    puts types.find{ |i| i.typekey == 'rooms'}.id.inspect
+    return propertybuyad.propertydetailwishes.select{|v| v[:type_id] == types.find{ |i| i.typekey == 'rooms'}.id }[0][:comment].to_i
+    #  return propertydetails.select{|v| v[:type_id] == types.find{ |i| i.typekey == detail }.id.to_s}[0][:comment].to_i
   end
 
   def calcul_reward ()

@@ -4,7 +4,7 @@
             <!-- Image -->
             <div class="w-full h-64 overflow-hidden">
                 <% if classifiedad.propertyphotos.empty? %>
-                <img src="https://source.unsplash.com/collection/10566974" alt="Just a flower" class="w-full object-scale-down lg:object-cover rounded-t-xl">
+                    <img src="https://source.unsplash.com/collection/10566974" alt="Just a flower" class="w-full object-scale-down lg:object-cover rounded-t-xl">
                 <%else%>
                     <% if classifiedad.propertyphotos.last.image_url %>
                     <%= image_tag "#{classifiedad.propertyphotos.last.image_url}" , class:"w-full h-64 object-scale-down lg:object-cover rounded-t-xl" %>
@@ -31,7 +31,7 @@
             </div>
             <div class="py-1 h-32">
                 <div class="mt-1 text-lg text-wrap font-medium ">
-                    <%= get_property_title(classifiedad) %>
+                    <%= get_property_action(classifiedad) %> : <%= get_property_types(classifiedad) %>
                 </div>
                 <div class="text-lg font-small">
                     <%if classifiedad.propertyad.present?%>
